@@ -52,38 +52,38 @@
         .perspective-container { perspective: 1000px; }
         .transform-3d { transform-style: preserve-3d; }
         
-        /* Interactive Robot Head */
-        .robot-head {
-            transition: transform 0.1s ease-out;
-            will-change: transform;
-            filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.4));
-        }
-
-        /* Floating Animation */
-        .float { animation: floating 6s ease-in-out infinite; }
-        .float-delay { animation: floating 6s ease-in-out infinite 3s; }
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-        }
-
-        /* NIST Chevron Steps */
-        .nist-step {
-            clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 10% 50%);
-            margin-left: -20px;
-        }
-        .nist-step:first-child { clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 0% 50%); margin-left: 0; }
-
-        /* Semicircle Infographic Positioning */
-        .semi-circle-container { position: relative; width: 100%; height: 500px; display: flex; justify-content: center; align-items: flex-end; }
-        .semi-circle-item { position: absolute; transform-origin: bottom center; }
-        
         /* Animated Background Glows */
         .glow-blob {
-            position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.4;
+            position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.3;
             animation: pulseGlow 10s infinite alternate; pointer-events: none;
         }
-        @keyframes pulseGlow { 0% { transform: scale(1); opacity: 0.3; } 100% { transform: scale(1.2); opacity: 0.5; } }
+        @keyframes pulseGlow { 0% { transform: scale(1); opacity: 0.2; } 100% { transform: scale(1.2); opacity: 0.4; } }
+
+        /* Custom Glowing Card Borders (For the new Infographic) */
+        .glow-card-orange { box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), inset 0 0 10px rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.5); }
+        .glow-card-pink { box-shadow: 0 0 20px rgba(236, 72, 153, 0.4), inset 0 0 10px rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.5); }
+        .glow-card-cyan { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), inset 0 0 10px rgba(6, 182, 212, 0.2); border: 1px solid rgba(6, 182, 212, 0.5); }
+        .glow-card-purple { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), inset 0 0 10px rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.5); }
+
+        /* SVG Line Animation */
+        .path-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 5s linear infinite;
+        }
+        @keyframes dash { to { stroke-dashoffset: 0; } }
+        
+        /* Testimonial Marquee */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: scrollMarquee 40s linear infinite;
+        }
+        @keyframes scrollMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-track:hover { animation-play-state: paused; }
     </style>
 </head>
 <body class="antialiased">
@@ -103,44 +103,44 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION (Updated with 'gemini.png' Meetsansara style) -->
     <section class="min-h-screen flex items-center justify-center pt-24 perspective-container px-6 overflow-hidden">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
             <div class="z-10 gs-reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 text-brand-cyan font-medium text-sm mb-6">
+                    <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+                    v2.0 is live: Next-Gen Voice Agents
+                </div>
                 <h1 class="text-5xl lg:text-7xl font-black text-white leading-tight mb-6">
                     Automate Your Growth.<br><span class="text-gradient">Meet AI TaskOrbit.</span>
                 </h1>
                 <p class="text-xl text-slate-400 mb-8 max-w-lg">Your 24/7 autonomous employee bridging the gap between intent and conversion across every vertical.</p>
                 <div class="flex gap-4">
-                    <a href="#demo" class="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-brand-cyan transition-colors">Start Automating</a>
+                    <a href="#demo" class="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-brand-cyan transition-colors shadow-[0_0_30px_rgba(255,255,255,0.2)]">Start Automating</a>
                 </div>
             </div>
 
-            <!-- 3D Interactive Robot Logo Area -->
-            <div class="relative h-[500px] w-full flex items-center justify-center transform-3d gs-reveal">
-                <!-- The Robot -->
-                <div class="robot-head relative z-20 w-64 h-64 bg-gradient-to-b from-slate-200 to-slate-400 rounded-[40%] flex flex-col items-center justify-center border-4 border-slate-500 shadow-2xl">
-                    <div class="absolute -top-8 w-6 h-6 rounded-full bg-green-500 shadow-[0_0_20px_#22c55e]"></div>
-                    <div class="absolute -top-4 w-2 h-4 bg-slate-400"></div>
-                    <div class="w-48 h-32 bg-black rounded-full flex justify-center items-center gap-6 shadow-inner border-2 border-slate-600">
-                        <div class="w-8 h-8 rounded-sm bg-brand-cyan shadow-[0_0_15px_#00f0ff] animate-pulse"></div>
-                        <div class="w-8 h-8 rounded-sm bg-brand-cyan shadow-[0_0_15px_#00f0ff] animate-pulse"></div>
-                    </div>
-                    <div class="absolute -bottom-6 w-32 h-10 bg-slate-300 rounded-b-3xl"></div>
-                </div>
+            <!-- Meetsansara Style Animated Logo Area -->
+            <div class="relative h-[600px] w-full flex items-center justify-center transform-3d gs-reveal">
+                
+                <!-- Glowing Aura behind Logo -->
+                <div class="absolute w-[300px] h-[300px] bg-brand-cyan/30 rounded-full blur-[100px] animate-pulse"></div>
+                
+                <!-- GEMINI LOGO IMAGE (Make sure gemini.png is in your folder) -->
+                <img id="gemini-logo" src="gemini.png" alt="AI TaskOrbit Robot" onerror="this.src='https://cdn3d.iconscout.com/3d/premium/thumb/robot-4996112-4159599.png'" class="relative z-20 w-80 lg:w-96 drop-shadow-[0_0_40px_rgba(0,240,255,0.6)] cursor-pointer" />
 
-                <!-- Floating Glass Boxes -->
-                <div class="absolute top-10 right-0 glass px-6 py-3 rounded-2xl float text-sm font-bold text-brand-cyan shadow-lg border border-brand-cyan/30 z-30">
+                <!-- Floating Stats Cards -->
+                <div id="float-card-1" class="absolute top-20 right-0 glass px-6 py-3 rounded-2xl text-sm font-bold text-brand-cyan shadow-lg border border-brand-cyan/30 z-30">
                     <i class="ph-fill ph-trend-up"></i> +35% Conv.
                 </div>
-                <div class="absolute bottom-10 left-0 glass px-6 py-3 rounded-2xl float-delay text-sm font-bold text-purple-400 shadow-lg border border-brand-purple/30 z-30">
+                <div id="float-card-2" class="absolute bottom-20 left-0 glass px-6 py-3 rounded-2xl text-sm font-bold text-purple-400 shadow-lg border border-brand-purple/30 z-30">
                     <i class="ph-fill ph-clock"></i> 24/7 Active
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION 1: WHY BUSINESSES NEED AI VOICE AGENTS NOW -->
+    <!-- WHY BUSINESSES NEED AI VOICE AGENTS NOW -->
     <section class="py-24 px-6 relative z-10 max-w-7xl mx-auto gs-reveal">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Why Businesses Need <span class="text-gradient">AI Voice Agents</span> Now</h2>
@@ -148,7 +148,7 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
-            <!-- Pain Points (The Problem) -->
+            <!-- Pain Points -->
             <div class="glass p-8 md:p-10 rounded-3xl border-t-4 border-red-500/60 relative overflow-hidden group hover:-translate-y-2 transition-transform">
                 <div class="absolute -right-10 -top-10 w-32 h-32 bg-red-500/10 blur-[50px] rounded-full"></div>
                 <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
@@ -174,7 +174,7 @@
                 </ul>
             </div>
 
-            <!-- AI Solution (The Fix) -->
+            <!-- AI Solution -->
             <div class="glass p-8 md:p-10 rounded-3xl border-t-4 border-brand-cyan/60 relative overflow-hidden group hover:-translate-y-2 transition-transform">
                 <div class="absolute -right-10 -top-10 w-32 h-32 bg-brand-cyan/20 blur-[50px] rounded-full"></div>
                 <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
@@ -208,7 +208,7 @@
         </div>
     </section>
 
-    <!-- NEW SECTION 2: SEE THE ROI CLEARLY -->
+    <!-- SEE THE ROI CLEARLY -->
     <section class="py-12 px-6 relative z-10 max-w-7xl mx-auto gs-reveal">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">See the <span class="text-gradient">ROI</span> Clearly</h2>
@@ -216,215 +216,151 @@
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Cost Saving -->
             <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform group">
-                <div class="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center text-3xl mb-6 shadow-[0_0_20px_rgba(34,197,94,0.2)] group-hover:scale-110 transition-transform">
-                    💰
-                </div>
+                <div class="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center text-3xl mb-6 shadow-[0_0_20px_rgba(34,197,94,0.2)] group-hover:scale-110 transition-transform">💰</div>
                 <h3 class="font-bold text-white text-xl mb-3">Cost saving</h3>
                 <p class="text-sm text-slate-400 leading-relaxed">Save up to 70–80% on call center and reception costs by automating routine inbound calls.</p>
             </div>
-            
-            <!-- Revenue Increase -->
             <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform group">
-                <div class="w-16 h-16 rounded-2xl bg-brand-cyan/20 flex items-center justify-center text-3xl mb-6 shadow-[0_0_20px_rgba(0,240,255,0.2)] group-hover:scale-110 transition-transform">
-                    📈
-                </div>
+                <div class="w-16 h-16 rounded-2xl bg-brand-cyan/20 flex items-center justify-center text-3xl mb-6 shadow-[0_0_20px_rgba(0,240,255,0.2)] group-hover:scale-110 transition-transform">📈</div>
                 <h3 class="font-bold text-white text-xl mb-3">Revenue increase</h3>
                 <p class="text-sm text-slate-400 leading-relaxed">Increase lead conversion by up to 3× by answering every call and following up instantly.</p>
             </div>
-            
-            <!-- Time Saving -->
             <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform group">
-                <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center text-3xl mb-6 shadow-[0_0_20px_rgba(168,85,247,0.2)] group-hover:scale-110 transition-transform">
-                    ⏱
-                </div>
+                <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center text-3xl mb-6 shadow-[0_0_20px_rgba(168,85,247,0.2)] group-hover:scale-110 transition-transform">⏱</div>
                 <h3 class="font-bold text-white text-xl mb-3">Time saving</h3>
                 <p class="text-sm text-slate-400 leading-relaxed">Automate 100% of inbound calls so your team focuses on closing deals, not chasing ring tones.</p>
             </div>
-            
-            <!-- 24/7 Availability -->
             <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform group">
-                <div class="w-16 h-16 rounded-2xl bg-orange-500/20 flex items-center justify-center text-3xl mb-6 shadow-[0_0_20px_rgba(249,115,22,0.2)] group-hover:scale-110 transition-transform">
-                    🌍
-                </div>
+                <div class="w-16 h-16 rounded-2xl bg-orange-500/20 flex items-center justify-center text-3xl mb-6 shadow-[0_0_20px_rgba(249,115,22,0.2)] group-hover:scale-110 transition-transform">🌍</div>
                 <h3 class="font-bold text-white text-xl mb-3">24/7 availability</h3>
                 <p class="text-sm text-slate-400 leading-relaxed">Never miss a customer even at night — AI is always available, even when your team isn’t.</p>
             </div>
         </div>
     </section>
 
-    <!-- METRICS SECTION (Original Section Continued) -->
+    <!-- NEW SECTION: HOW AI TASKORBIT WORKS (Image 1 - The Glow Network) -->
+    <section class="py-32 px-6 relative z-10 w-full overflow-hidden gs-reveal bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] bg-cover">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">How AI TaskOrbit works in your business</h2>
+            <p class="text-slate-400 text-lg">Leverage AI-powered automation to streamline your lead management and customer engagement.</p>
+        </div>
+
+        <div class="relative w-full h-[850px] md:h-[600px] flex items-center justify-center max-w-6xl mx-auto perspective-container">
+            
+            <!-- SVG Glowing Lines Background -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="glowGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8" />
+                        <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8" />
+                    </linearGradient>
+                    <linearGradient id="glowGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#ec4899" stop-opacity="0.8" />
+                        <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8" />
+                    </linearGradient>
+                    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    </filter>
+                </defs>
+                <!-- Abstract curves connecting sides to center -->
+                <path d="M 15% 25% C 30% 25%, 35% 50%, 50% 50%" stroke="url(#glowGrad1)" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
+                <path d="M 15% 50% C 30% 50%, 40% 50%, 50% 50%" stroke="#ec4899" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
+                <path d="M 15% 75% C 30% 75%, 35% 50%, 50% 50%" stroke="#06b6d4" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
+                
+                <path d="M 85% 25% C 70% 25%, 65% 50%, 50% 50%" stroke="url(#glowGrad2)" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
+                <path d="M 85% 50% C 70% 50%, 60% 50%, 50% 50%" stroke="#06b6d4" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
+                <path d="M 85% 75% C 70% 75%, 65% 50%, 50% 50%" stroke="#a855f7" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
+            </svg>
+
+            <!-- Center Console (Lead Form + Robot) -->
+            <div class="relative z-20 w-[340px] glass rounded-3xl p-6 border-b-4 border-brand-cyan/50 shadow-[0_0_50px_rgba(0,240,255,0.2)] bg-black/60 transform hover:scale-105 transition-transform duration-500">
+                <!-- Mini Robot sitting on top -->
+                <img src="gemini.png" onerror="this.src='https://cdn3d.iconscout.com/3d/premium/thumb/robot-4996112-4159599.png'" class="absolute -top-24 left-1/2 transform -translate-x-1/2 w-40 drop-shadow-[0_0_20px_rgba(0,240,255,0.8)]" alt="AI Agent">
+                
+                <h3 class="text-white font-bold text-center mt-12 mb-4 border-b border-white/10 pb-2">Lead Enquiry Form</h3>
+                <div class="space-y-3">
+                    <div class="bg-white/5 border border-white/10 rounded px-3 py-2 flex items-center text-xs text-slate-400"><i class="ph ph-user mr-2 text-brand-cyan"></i> Name</div>
+                    <div class="bg-white/5 border border-white/10 rounded px-3 py-2 flex items-center text-xs text-slate-400"><i class="ph ph-envelope mr-2 text-brand-cyan"></i> Email</div>
+                    <div class="bg-white/5 border border-white/10 rounded px-3 py-2 flex items-center text-xs text-slate-400"><i class="ph ph-phone mr-2 text-brand-cyan"></i> Phone Number</div>
+                    <div class="bg-white/5 border border-white/10 rounded px-3 py-6 text-xs text-slate-400">Your Message...</div>
+                    <button class="w-full bg-blue-500 text-white font-bold py-2 rounded shadow-[0_0_15px_rgba(59,130,246,0.6)]">Submit</button>
+                </div>
+            </div>
+
+            <!-- Outer Cards -->
+            <!-- Left 1 -->
+            <div class="absolute top-[5%] md:top-[15%] left-4 md:left-[5%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-orange z-20 transform hover:scale-110 transition-transform cursor-pointer">
+                <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-buildings text-3xl text-orange-400"></i><h4 class="font-bold text-white text-sm md:text-base">Real Estate</h4></div>
+                <p class="text-[10px] md:text-xs text-slate-300">Capture and qualify property inquiries before competitors call back.</p>
+            </div>
+            <!-- Left 2 -->
+            <div class="absolute top-[35%] md:top-[42%] left-4 md:left-[0%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-pink z-20 transform hover:scale-110 transition-transform cursor-pointer">
+                <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-stethoscope text-3xl text-pink-500"></i><h4 class="font-bold text-white text-sm md:text-base">Clinics</h4></div>
+                <p class="text-[10px] md:text-xs text-slate-300">Handle appointment booking without front desk overload.</p>
+            </div>
+            <!-- Left 3 -->
+            <div class="absolute top-[65%] md:top-[70%] left-4 md:left-[5%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-cyan z-20 transform hover:scale-110 transition-transform cursor-pointer">
+                <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-bank text-3xl text-cyan-400"></i><h4 class="font-bold text-white text-sm md:text-base">Finance</h4></div>
+                <p class="text-[10px] md:text-xs text-slate-300">Qualify loan and investment leads with compliant scripts.</p>
+            </div>
+
+            <!-- Right 1 -->
+            <div class="absolute top-[15%] right-4 md:right-[5%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-pink z-20 transform hover:scale-110 transition-transform cursor-pointer hidden md:block">
+                <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-stethoscope text-3xl text-pink-500"></i><h4 class="font-bold text-white text-sm md:text-base">Clinics</h4></div>
+                <p class="text-[10px] md:text-xs text-slate-300">Handle appointment booking without front desk overload.</p>
+            </div>
+            <!-- Right 2 -->
+            <div class="absolute top-[42%] right-4 md:right-[0%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-cyan z-20 transform hover:scale-110 transition-transform cursor-pointer">
+                <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-shopping-cart text-3xl text-cyan-400"></i><h4 class="font-bold text-white text-sm md:text-base">E-commerce</h4></div>
+                <p class="text-[10px] md:text-xs text-slate-300">Answer delivery, order, and product questions automatically.</p>
+            </div>
+            <!-- Right 3 -->
+            <div class="absolute top-[70%] right-4 md:right-[5%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-purple z-20 transform hover:scale-110 transition-transform cursor-pointer">
+                <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-student text-3xl text-purple-400"></i><h4 class="font-bold text-white text-sm md:text-base">Coaching</h4></div>
+                <p class="text-[10px] md:text-xs text-slate-300">Manage admission, fee, and batch inquiries at scale.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- METRICS SECTION -->
     <section class="py-24 px-6 relative z-10 max-w-7xl mx-auto gs-reveal">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Comparative Industry Performance Metrics</h2>
             <p class="text-slate-400">Data-driven insights into AI automation efficiency gains.</p>
         </div>
         <div class="grid md:grid-cols-5 gap-4">
-            <!-- Metric Cards -->
             <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
                 <i class="ph ph-buildings text-3xl text-brand-cyan mb-4"></i>
                 <h3 class="font-bold text-white mb-2">Real Estate</h3>
                 <p class="text-xs text-slate-400 mb-4">Bottleneck: Speed-to-lead</p>
                 <div class="text-2xl font-black text-brand-cyan">35% Gain</div>
-                <p class="text-xs text-slate-500 mt-1">in lead conversion</p>
             </div>
             <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
                 <i class="ph ph-stethoscope text-3xl text-brand-cyan mb-4"></i>
                 <h3 class="font-bold text-white mb-2">Healthcare</h3>
                 <p class="text-xs text-slate-400 mb-4">Bottleneck: Intake friction</p>
                 <div class="text-2xl font-black text-brand-cyan">20% Boost</div>
-                <p class="text-xs text-slate-500 mt-1">admin productivity</p>
             </div>
             <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
                 <i class="ph ph-shopping-cart text-3xl text-brand-cyan mb-4"></i>
                 <h3 class="font-bold text-white mb-2">E-commerce</h3>
                 <p class="text-xs text-slate-400 mb-4">Bottleneck: Repetitive tickets</p>
                 <div class="text-2xl font-black text-brand-cyan">40% Drop</div>
-                <p class="text-xs text-slate-500 mt-1">in operating costs</p>
             </div>
             <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
                 <i class="ph ph-bank text-3xl text-brand-cyan mb-4"></i>
                 <h3 class="font-bold text-white mb-2">Finance</h3>
                 <p class="text-xs text-slate-400 mb-4">Bottleneck: Fraud detection</p>
                 <div class="text-2xl font-black text-brand-cyan">99.8%</div>
-                <p class="text-xs text-slate-500 mt-1">qualification accuracy</p>
             </div>
             <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
                 <i class="ph ph-student text-3xl text-brand-cyan mb-4"></i>
                 <h3 class="font-bold text-white mb-2">Coaching</h3>
                 <p class="text-xs text-slate-400 mb-4">Bottleneck: Scalable enquiries</p>
                 <div class="text-2xl font-black text-brand-cyan">5x Growth</div>
-                <p class="text-xs text-slate-500 mt-1">inquiry volume capacity</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEMICIRCLE INFOGRAPHIC (Image 3 Concept) -->
-    <section class="py-32 px-6 max-w-6xl mx-auto overflow-hidden gs-reveal">
-        <div class="text-center mb-20">
-            <h2 class="text-3xl md:text-5xl font-bold text-white">5-Step Workflow Architecture</h2>
-        </div>
-        
-        <div class="semi-circle-container relative">
-            <!-- Center Hub -->
-            <div class="absolute bottom-0 z-20 w-64 h-64 bg-white rounded-full flex flex-col items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.2)] text-black text-center p-6 translate-y-1/2 border-8 border-[#050505]">
-                <h3 class="text-xl font-black leading-tight">5 STEPS<br>INFOGRAPHIC<br>TEMPLATE</h3>
-                <p class="text-[10px] text-gray-500 mt-2 font-medium">Core processing logic of AI TaskOrbit.</p>
-            </div>
-
-            <!-- Step 1 (Left-most) -->
-            <div class="absolute w-40 p-4 rounded-[2rem] bg-red-600 text-white flex flex-col items-center shadow-xl hover:-translate-y-2 transition-transform" style="bottom: 50%; left: 10%; transform: rotate(-40deg);">
-                <i class="ph ph-magnifying-glass text-3xl mb-2"></i>
-                <div class="text-center transform rotate(40deg)">
-                    <h4 class="font-bold text-sm">1. Inquiry Entry</h4>
-                    <p class="text-[10px] opacity-80 leading-tight mt-1">Capturing user requests.</p>
-                </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="absolute w-40 p-4 rounded-[2rem] bg-orange-500 text-white flex flex-col items-center shadow-xl hover:-translate-y-2 transition-transform" style="bottom: 75%; left: 25%; transform: rotate(-20deg);">
-                <i class="ph ph-chart-bar text-3xl mb-2"></i>
-                <div class="text-center transform rotate(20deg)">
-                    <h4 class="font-bold text-sm">2. Data Analysis</h4>
-                    <p class="text-[10px] opacity-80 leading-tight mt-1">AI reasoning engine.</p>
-                </div>
-            </div>
-
-            <!-- Step 3 (Top Center) -->
-            <div class="absolute w-40 p-4 rounded-[2rem] bg-purple-700 text-white flex flex-col items-center shadow-xl hover:-translate-y-2 transition-transform" style="bottom: 85%; left: 50%; transform: translateX(-50%);">
-                <i class="ph ph-users text-3xl mb-2"></i>
-                <div class="text-center">
-                    <h4 class="font-bold text-sm">3. Intent Matching</h4>
-                    <p class="text-[10px] opacity-80 leading-tight mt-1">Intent detection.</p>
-                </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="absolute w-40 p-4 rounded-[2rem] bg-teal-500 text-white flex flex-col items-center shadow-xl hover:-translate-y-2 transition-transform" style="bottom: 75%; right: 25%; transform: rotate(20deg);">
-                <i class="ph ph-gear text-3xl mb-2"></i>
-                <div class="text-center transform rotate(-20deg)">
-                    <h4 class="font-bold text-sm">4. Autonomous Action</h4>
-                    <p class="text-[10px] opacity-80 leading-tight mt-1">Execution & Booking.</p>
-                </div>
-            </div>
-
-            <!-- Step 5 (Right-most) -->
-            <div class="absolute w-40 p-4 rounded-[2rem] bg-blue-600 text-white flex flex-col items-center shadow-xl hover:-translate-y-2 transition-transform" style="bottom: 50%; right: 10%; transform: rotate(40deg);">
-                <i class="ph ph-chats text-3xl mb-2"></i>
-                <div class="text-center transform rotate(-40deg)">
-                    <h4 class="font-bold text-sm">5. CRM Update</h4>
-                    <p class="text-[10px] opacity-80 leading-tight mt-1">Final integration.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- VERTICAL ARCHITECTURES SECTION -->
-    <section class="py-24 px-6 bg-white/5 relative z-10 gs-reveal">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-16 text-center">Tailored Intelligence: How AI TaskOrbit Transforms Your Specific Vertical.</h2>
-            
-            <div class="grid lg:grid-cols-2 gap-8">
-                <!-- Card 1 -->
-                <div class="glass p-8 rounded-3xl group hover:border-brand-cyan/50 transition-colors">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400"><i class="ph ph-buildings text-2xl"></i></div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors">Real Estate: Instant Property Qualification</h3>
-                    </div>
-                    <p class="text-brand-cyan font-semibold text-sm mb-4">Capture Leads Before the Competition Wakes Up..</p>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        In the real estate sector, the "speed-to-lead" variable is the most significant predictor of conversion success. AI TaskOrbit utilizes conversational AI voice agents that function as expert realtors, capable of engaging website visitors 24/7 with human-like empathy in over 50 languages. The implementation of a Voice of Customer (VoC) dashboard allows filtering by sentiment, maximizing ROI for professional brokers.
-                    </p>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="glass p-8 rounded-3xl group hover:border-brand-cyan/50 transition-colors">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400"><i class="ph ph-stethoscope text-2xl"></i></div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors">Clinics: Seamless Patient Intake</h3>
-                    </div>
-                    <p class="text-brand-cyan font-semibold text-sm mb-4">Eliminating Front Desk Fatigue through Intelligent Scheduling..</p>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        AI TaskOrbit serves as a personalized care assistant, leveraging medical Retrieval-Augmented Generation (RAG) to extract information and provide accurate clinical workflow support. HIPAA-compliant agents automate appointment booking, mitigating "front desk overload" and allowing providers to focus on direct patient care rather than documentation.
-                    </p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="glass p-8 rounded-3xl group hover:border-brand-cyan/50 transition-colors">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400"><i class="ph ph-shopping-cart text-2xl"></i></div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors">E-commerce: From Cart to Doorstep</h3>
-                    </div>
-                    <p class="text-brand-cyan font-semibold text-sm mb-4">Automating the Post-Purchase Experience for 24/7 Satisfaction..</p>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Moving beyond revenue growth to agentic systems. Integrates natively with Shopify and Stripe to handle order status, returns, and availability autonomously with a 73% resolution rate. Advanced agents process refunds and update records via API calls, escalating to human agents only for high-complexity queries.
-                    </p>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="glass p-8 rounded-3xl group hover:border-brand-cyan/50 transition-colors">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-400"><i class="ph ph-bank text-2xl"></i></div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors">Finance: Secure Qualification</h3>
-                    </div>
-                    <p class="text-brand-cyan font-semibold text-sm mb-4">Scalable Wealth Management Lead Scoring with Compliance..</p>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Revolutionizing lead qualification through compliant scripts and risk analysis. Utilizing technologies like LangGraph, agents query databases to identify anomalies and auto-freeze accounts. Provides proactive risk management while delivering a personalized "concierge-life" experience for clients.
-                    </p>
-                </div>
-
-                <!-- Card 5 (Full Width) -->
-                <div class="glass p-8 rounded-3xl group hover:border-brand-cyan/50 transition-colors lg:col-span-2">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400"><i class="ph ph-student text-2xl"></i></div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-brand-cyan transition-colors">Coaching: Educational Scale</h3>
-                    </div>
-                    <p class="text-brand-cyan font-semibold text-sm mb-4">Managing Global Admission Pipelines with Precision and Ease..</p>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Acts as an "open book" research assistant and 24/7 referral partner for coaching institutes. Uses AI-written email sequences to build relationships and address objections automatically based on the SMART goal framework. Gamifying the intake process boosts both proficiency and student retention rates globally.
-                    </p>
-                </div>
             </div>
         </div>
     </section>
@@ -432,54 +368,108 @@
     <!-- NIST CYBERSECURITY FRAMEWORK -->
     <section class="py-24 px-6 max-w-7xl mx-auto gs-reveal">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">How AI TaskOrbit Works: Integrating the NIST Framework</h2>
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">NIST Framework Integration</h2>
             <p class="text-slate-400 max-w-2xl mx-auto">Process logic modeled after the NIST Cybersecurity Framework ensuring robust, secure operations.</p>
         </div>
 
         <div class="flex flex-col md:flex-row w-full overflow-hidden rounded-xl shadow-2xl">
-            <!-- Step 1 -->
+            <!-- Steps 1 to 5 -->
             <div class="nist-step flex-1 bg-[#F5B041] p-8 pl-12 text-center text-white relative flex flex-col items-center">
                 <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">01</div>
                 <h3 class="font-bold text-lg mb-2">Identify</h3>
                 <p class="text-xs opacity-90 leading-tight mb-4">Asset & Lead Management</p>
-                <p class="text-[10px] leading-relaxed">Cataloging client assets, data systems, and identifying critical lead entry points.</p>
                 <i class="ph ph-eye text-2xl mt-auto pt-4"></i>
             </div>
-            
-            <!-- Step 2 -->
             <div class="nist-step flex-1 bg-[#CD5C5C] p-8 pl-12 text-center text-white relative flex flex-col items-center">
                 <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">02</div>
                 <h3 class="font-bold text-lg mb-2">Protect</h3>
                 <p class="text-xs opacity-90 leading-tight mb-4">Data Security</p>
-                <p class="text-[10px] leading-relaxed">Implementing encryption, access controls, and role-based training to protect lead data.</p>
                 <i class="ph ph-shield-check text-2xl mt-auto pt-4"></i>
             </div>
-
-            <!-- Step 3 -->
             <div class="nist-step flex-1 bg-[#45B39D] p-8 pl-12 text-center text-white relative flex flex-col items-center">
                 <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">03</div>
                 <h3 class="font-bold text-lg mb-2">Detect</h3>
                 <p class="text-xs opacity-90 leading-tight mb-4">Intent Recognition</p>
-                <p class="text-[10px] leading-relaxed">Real-time monitoring of conversations to detect shifts in intent or security anomalies.</p>
                 <i class="ph ph-crosshair text-2xl mt-auto pt-4"></i>
             </div>
-
-            <!-- Step 4 -->
             <div class="nist-step flex-1 bg-[#2E86C1] p-8 pl-12 text-center text-white relative flex flex-col items-center">
                 <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">04</div>
                 <h3 class="font-bold text-lg mb-2">Respond</h3>
                 <p class="text-xs opacity-90 leading-tight mb-4">Incident & Action</p>
-                <p class="text-[10px] leading-relaxed">Instantaneous AI response to customer queries to minimize lead drop-off and contain errors.</p>
                 <i class="ph ph-arrow-fat-lines-right text-2xl mt-auto pt-4"></i>
             </div>
-
-            <!-- Step 5 -->
             <div class="nist-step flex-1 bg-[#1A5276] p-8 pl-12 text-center text-white relative flex flex-col items-center">
                 <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">05</div>
                 <h3 class="font-bold text-lg mb-2">Recover</h3>
-                <p class="text-xs opacity-90 leading-tight mb-4">Resilience & Restoration</p>
-                <p class="text-[10px] leading-relaxed">Restoring normal operations after disruptions and refining models through post-mortem analysis.</p>
+                <p class="text-xs opacity-90 leading-tight mb-4">Resilience</p>
                 <i class="ph ph-gear text-2xl mt-auto pt-4"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: TESTIMONIALS -->
+    <section class="py-24 relative z-10 w-full overflow-hidden gs-reveal bg-black/40 border-y border-white/5">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Loved by <span class="text-gradient">Industry Leaders</span></h2>
+            <p class="text-slate-400">See what happens when you deploy a 24/7 AI workforce.</p>
+        </div>
+
+        <div class="marquee-track gap-8 px-4">
+            <!-- Testimonial 1 -->
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-brand-cyan transition-colors">
+                <div class="flex text-brand-cyan mb-4">
+                    <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                </div>
+                <p class="text-slate-300 italic mb-6">"AI TaskOrbit completely transformed our real estate lead qualification. We don't miss a single late-night property inquiry anymore. Revenue is up 35%!"</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">SJ</div>
+                    <div>
+                        <h4 class="text-white font-bold">Sarah Jenkins</h4>
+                        <p class="text-xs text-slate-500">Director, Apex Real Estate</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Testimonial 2 -->
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-brand-purple transition-colors">
+                <div class="flex text-purple-400 mb-4">
+                    <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                </div>
+                <p class="text-slate-300 italic mb-6">"The front desk overload at our clinic was causing staff burnout. The AI voice agent now handles 80% of our appointment bookings flawlessly."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-purple-900 rounded-full flex items-center justify-center text-white font-bold">Dr.M</div>
+                    <div>
+                        <h4 class="text-white font-bold">Dr. Marcus Lin</h4>
+                        <p class="text-xs text-slate-500">Head Physician, CityCare</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Testimonial 3 -->
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-pink-500 transition-colors">
+                <div class="flex text-pink-500 mb-4">
+                    <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                </div>
+                <p class="text-slate-300 italic mb-6">"Our e-commerce store gets thousands of 'Where is my order?' queries. The AI handles them autonomously. Operating costs dropped by 40% instantly."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-pink-900 rounded-full flex items-center justify-center text-white font-bold">AK</div>
+                    <div>
+                        <h4 class="text-white font-bold">Alicia Keys</h4>
+                        <p class="text-xs text-slate-500">Founder, TrendCart</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Duplicate for infinite scroll effect -->
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-brand-cyan transition-colors">
+                <div class="flex text-brand-cyan mb-4">
+                    <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                </div>
+                <p class="text-slate-300 italic mb-6">"AI TaskOrbit completely transformed our real estate lead qualification. We don't miss a single late-night property inquiry anymore. Revenue is up 35%!"</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">SJ</div>
+                    <div>
+                        <h4 class="text-white font-bold">Sarah Jenkins</h4>
+                        <p class="text-xs text-slate-500">Director, Apex Real Estate</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -487,7 +477,6 @@
     <!-- HIGH-CONVERTING LEAD ENQUIRY FORM -->
     <section id="demo" class="py-24 px-6 relative z-10 gs-reveal">
         <div class="max-w-4xl mx-auto glass rounded-3xl p-8 md:p-14 relative overflow-hidden">
-            <!-- Form Glow -->
             <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-cyan/20 blur-[80px] rounded-full pointer-events-none"></div>
             
             <div class="text-center mb-10 relative z-10">
@@ -499,18 +488,18 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
-                        <input type="text" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors placeholder:text-slate-600" placeholder="John Doe">
+                        <input type="text" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="John Doe">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Work Email</label>
-                        <input type="email" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors placeholder:text-slate-600" placeholder="john@company.com">
+                        <input type="email" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="john@company.com">
                     </div>
                 </div>
                 
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Company Name</label>
-                        <input type="text" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors placeholder:text-slate-600" placeholder="Acme Corp">
+                        <input type="text" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="Acme Corp">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Industry Vertical</label>
@@ -521,79 +510,62 @@
                             <option value="ecommerce">E-commerce</option>
                             <option value="finance">Finance</option>
                             <option value="coaching">Coaching & Education</option>
-                            <option value="other">Other</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-slate-300 mb-2">Primary Operational Bottleneck</label>
-                    <textarea rows="3" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors placeholder:text-slate-600" placeholder="E.g., We are struggling with front desk overload and missed calls..."></textarea>
+                    <textarea rows="3" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="E.g., We are struggling with front desk overload and missed calls..."></textarea>
                 </div>
 
                 <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-purple text-white font-bold text-lg hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(123,44,191,0.5)]">
                     Generate My AI Architecture
                 </button>
-                <p class="text-center text-xs text-slate-500 mt-4"><i class="ph-fill ph-lock-key"></i> Data secured by enterprise-grade encryption. No spam.</p>
             </form>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 pt-10 pb-6 text-center text-slate-500 text-sm">
+    <footer class="border-t border-white/10 pt-10 pb-6 text-center text-slate-500 text-sm relative z-10">
         <p>&copy; 2026 AI TaskOrbit. Built purely with HTML, CSS, & JavaScript. GSAP Enabled.</p>
     </footer>
 
     <!-- GSAP & Vanilla JS Interactions -->
     <script>
-        // Ensure GSAP is registered
+        // GSAP ScrollTrigger Integration
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Robot Cursor Tracking (3D CSS Transforms via JS)
+        // 1. Meetsansara Style Hero Logo Animation (3D Hover + Float)
+        const heroLogo = document.getElementById('gemini-logo');
+        
+        // Continuous smooth float
+        gsap.to(heroLogo, { y: -20, duration: 2.5, yoyo: true, repeat: -1, ease: "sine.inOut" });
+
+        // Cursor interactive 3D rotation
         document.addEventListener('mousemove', (e) => {
-            const robot = document.querySelector('.robot-head');
-            if(!robot) return;
-            
-            // Calculate mouse position relative to the center of the screen
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            
-            // Apply 3D rotation based on mouse movement
-            robot.style.transform = `rotateY(${-xAxis}deg) rotateX(${yAxis}deg)`;
+            if(!heroLogo) return;
+            const x = (window.innerWidth / 2 - e.pageX) / 40;
+            const y = (window.innerHeight / 2 - e.pageY) / 40;
+            gsap.to(heroLogo, { rotationY: -x, rotationX: y, duration: 0.8, ease: "power2.out", transformPerspective: 1000 });
         });
 
-        // 2. GSAP Scroll Animations
+        // 2. Section Reveal Animations
         const revealElements = document.querySelectorAll(".gs-reveal");
-        
         revealElements.forEach((elem) => {
             gsap.fromTo(elem, 
                 { autoAlpha: 0, y: 50 }, 
                 { 
-                    duration: 1, 
-                    autoAlpha: 1, 
-                    y: 0, 
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: elem,
-                        start: "top 85%", 
-                        toggleActions: "play none none reverse"
-                    }
+                    duration: 1, autoAlpha: 1, y: 0, ease: "power3.out",
+                    scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
                 }
             );
         });
 
-        // 3. Hover effects for the floating boxes
-        const floatingBoxes = document.querySelectorAll('.float, .float-delay');
-        floatingBoxes.forEach(box => {
-            box.addEventListener('mouseenter', () => {
-                box.style.animationPlayState = 'paused';
-                gsap.to(box, { scale: 1.1, duration: 0.3, ease: "power1.out" });
-            });
-            box.addEventListener('mouseleave', () => {
-                gsap.to(box, { scale: 1, duration: 0.3, ease: "power1.out", onComplete: () => {
-                    box.style.animationPlayState = 'running';
-                }});
-            });
+        // 3. Hover effects for Hero Floating Stats
+        const floatCards = document.querySelectorAll('#float-card-1, #float-card-2');
+        floatCards.forEach(card => {
+            gsap.to(card, { y: -15, duration: 3, yoyo: true, repeat: -1, ease: "sine.inOut", delay: Math.random() });
         });
     </script>
 </body>
