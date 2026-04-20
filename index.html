@@ -59,34 +59,50 @@
         }
         @keyframes pulseGlow { 0% { transform: scale(1); opacity: 0.2; } 100% { transform: scale(1.2); opacity: 0.4; } }
 
-        /* Custom Glowing Card Borders (For the new Infographic) */
+        /* Custom Glowing Card Borders */
         .glow-card-orange { box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), inset 0 0 10px rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.5); }
         .glow-card-pink { box-shadow: 0 0 20px rgba(236, 72, 153, 0.4), inset 0 0 10px rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.5); }
         .glow-card-cyan { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), inset 0 0 10px rgba(6, 182, 212, 0.2); border: 1px solid rgba(6, 182, 212, 0.5); }
         .glow-card-purple { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), inset 0 0 10px rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.5); }
 
         /* SVG Line Animation */
-        .path-line {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: dash 5s linear infinite;
-        }
+        .path-line { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash 5s linear infinite; }
         @keyframes dash { to { stroke-dashoffset: 0; } }
         
         /* Testimonial Marquee */
-        .marquee-track {
-            display: flex;
-            width: max-content;
-            animation: scrollMarquee 40s linear infinite;
-        }
-        @keyframes scrollMarquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        .marquee-track { display: flex; width: max-content; animation: scrollMarquee 40s linear infinite; }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .marquee-track:hover { animation-play-state: paused; }
+
+        /* NIST Theme Matched Chevrons */
+        .nist-container { display: flex; flex-direction: column; gap: 15px; }
+        @media (min-width: 768px) {
+            .nist-container { flex-direction: row; gap: 0; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5)); }
+        }
+        .nist-step {
+            clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 10% 50%);
+            margin-left: -20px;
+            padding: 40px 30px 40px 50px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+        .nist-step:first-child {
+            clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 0% 50%);
+            margin-left: 0; padding-left: 30px;
+        }
+        .nist-step:hover { transform: translateY(-5px); z-index: 10; }
+        
+        /* NIST Colors tailored to dark theme */
+        .nist-1 { background: linear-gradient(135deg, rgba(245,176,65,0.15), rgba(245,176,65,0.05)); border: 1px solid rgba(245,176,65,0.4); border-left: none; }
+        .nist-2 { background: linear-gradient(135deg, rgba(205,92,92,0.15), rgba(205,92,92,0.05)); border: 1px solid rgba(205,92,92,0.4); border-left: none; }
+        .nist-3 { background: linear-gradient(135deg, rgba(69,179,157,0.15), rgba(69,179,157,0.05)); border: 1px solid rgba(69,179,157,0.4); border-left: none; }
+        .nist-4 { background: linear-gradient(135deg, rgba(46,134,193,0.15), rgba(46,134,193,0.05)); border: 1px solid rgba(46,134,193,0.4); border-left: none; }
+        .nist-5 { background: linear-gradient(135deg, rgba(123,44,191,0.15), rgba(123,44,191,0.05)); border: 1px solid rgba(123,44,191,0.4); border-left: none; }
+        .nist-step:first-child { border-left: 1px solid rgba(245,176,65,0.4); }
+
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased relative">
 
     <!-- Ambient Background -->
     <div class="glow-blob bg-brand-purple w-[40vw] h-[40vw] top-[-10%] left-[-10%]"></div>
@@ -99,11 +115,15 @@
                 <i class="ph ph-robot text-brand-cyan text-3xl"></i>
                 <span class="text-xl font-bold tracking-widest text-white uppercase">AI TaskOrbit</span>
             </a>
+            <div class="hidden md:flex gap-6 items-center">
+                <a href="mailto:taskorbitt@gmail.com" class="text-slate-300 hover:text-white text-sm transition"><i class="ph ph-envelope-simple mr-1"></i> taskorbitt@gmail.com</a>
+                <a href="https://wa.me/919654524339" target="_blank" class="text-slate-300 hover:text-green-400 text-sm transition"><i class="ph ph-whatsapp-logo mr-1"></i> +91 96545 24339</a>
+            </div>
             <a href="#demo" class="px-6 py-2 rounded-full bg-brand-cyan text-black font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,240,255,0.4)]">Request Strategy</a>
         </div>
     </nav>
 
-    <!-- HERO SECTION (Updated with 'gemini.png' Meetsansara style) -->
+    <!-- HERO SECTION -->
     <section class="min-h-screen flex items-center justify-center pt-24 perspective-container px-6 overflow-hidden">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
             <div class="z-10 gs-reveal">
@@ -122,12 +142,11 @@
 
             <!-- Meetsansara Style Animated Logo Area -->
             <div class="relative h-[600px] w-full flex items-center justify-center transform-3d gs-reveal">
-                
                 <!-- Glowing Aura behind Logo -->
                 <div class="absolute w-[300px] h-[300px] bg-brand-cyan/30 rounded-full blur-[100px] animate-pulse"></div>
                 
-                <!-- GEMINI LOGO IMAGE (Make sure gemini.png is in your folder) -->
-                <img id="gemini-logo" src="img src="https://i.ibb.co/8nD2ZTZm/Gemini-Generated-Image-4d2na04d2na04d2n-removebg-preview.png*" alt="AI TaskOrbit Robot" onerror="this.src='https://cdn3d.iconscout.com/3d/premium/thumb/robot-4996112-4159599.png'" class="relative z-20 w-80 lg:w-96 drop-shadow-[0_0_40px_rgba(0,240,255,0.6)] cursor-pointer" />
+                <!-- USER'S PROVIDED LOGO IMAGE -->
+                <img id="gemini-logo" src="https://i.ibb.co/8nD2ZTZm/Gemini-Generated-Image-4d2na04d2na04d2n-removebg-preview.png" alt="AI TaskOrbit Robot" class="relative z-20 w-80 lg:w-[450px] drop-shadow-[0_0_40px_rgba(0,240,255,0.6)] cursor-pointer" />
 
                 <!-- Floating Stats Cards -->
                 <div id="float-card-1" class="absolute top-20 right-0 glass px-6 py-3 rounded-2xl text-sm font-bold text-brand-cyan shadow-lg border border-brand-cyan/30 z-30">
@@ -148,61 +167,32 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
-            <!-- Pain Points -->
             <div class="glass p-8 md:p-10 rounded-3xl border-t-4 border-red-500/60 relative overflow-hidden group hover:-translate-y-2 transition-transform">
                 <div class="absolute -right-10 -top-10 w-32 h-32 bg-red-500/10 blur-[50px] rounded-full"></div>
                 <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                     <i class="ph-fill ph-warning-circle text-red-500 text-3xl"></i> Pain Points
                 </h3>
                 <ul class="space-y-6">
-                    <li class="flex items-start gap-4">
-                        <i class="ph ph-phone-disconnect text-red-400 text-2xl mt-1"></i> 
-                        <p class="text-slate-300 leading-relaxed"><strong class="text-white">Missed calls</strong> = lost revenue you never see in your reports.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="ph ph-users-three text-red-400 text-2xl mt-1"></i> 
-                        <p class="text-slate-300 leading-relaxed"><strong class="text-white">Hiring and training staff</strong> is slow, expensive, and hard to scale.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="ph ph-moon text-red-400 text-2xl mt-1"></i> 
-                        <p class="text-slate-300 leading-relaxed"><strong class="text-white">No real 24/7 coverage</strong> — nights, weekends, holidays are dead spots.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="ph ph-hourglass-low text-red-400 text-2xl mt-1"></i> 
-                        <p class="text-slate-300 leading-relaxed"><strong class="text-white">Slow response kills intent</strong> — leads move on to faster competitors.</p>
-                    </li>
+                    <li class="flex items-start gap-4"><i class="ph ph-phone-disconnect text-red-400 text-2xl mt-1"></i> <p class="text-slate-300 leading-relaxed"><strong class="text-white">Missed calls</strong> = lost revenue you never see in your reports.</p></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-users-three text-red-400 text-2xl mt-1"></i> <p class="text-slate-300 leading-relaxed"><strong class="text-white">Hiring and training staff</strong> is slow, expensive, and hard to scale.</p></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-moon text-red-400 text-2xl mt-1"></i> <p class="text-slate-300 leading-relaxed"><strong class="text-white">No real 24/7 coverage</strong> — nights, weekends, holidays are dead spots.</p></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-hourglass-low text-red-400 text-2xl mt-1"></i> <p class="text-slate-300 leading-relaxed"><strong class="text-white">Slow response kills intent</strong> — leads move on to faster competitors.</p></li>
                 </ul>
             </div>
 
-            <!-- AI Solution -->
             <div class="glass p-8 md:p-10 rounded-3xl border-t-4 border-brand-cyan/60 relative overflow-hidden group hover:-translate-y-2 transition-transform">
                 <div class="absolute -right-10 -top-10 w-32 h-32 bg-brand-cyan/20 blur-[50px] rounded-full"></div>
                 <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                     <i class="ph-fill ph-check-circle text-brand-cyan text-3xl"></i> How AI TaskOrbit Fixes It
                 </h3>
                 <ul class="space-y-6">
-                    <li class="flex items-start gap-4">
-                        <i class="ph ph-lightning text-brand-cyan text-2xl mt-1"></i> 
-                        <p class="text-slate-300 leading-relaxed">AI answers every call <strong class="text-white">instantly</strong>, within a second of the first ring.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="ph ph-infinity text-brand-cyan text-2xl mt-1"></i> 
-                        <p class="text-slate-300 leading-relaxed"><strong class="text-white">Never sleeps</strong>, never gets overwhelmed, never asks for leave.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="ph ph-headset text-brand-cyan text-2xl mt-1"></i> 
-                        <p class="text-slate-300 leading-relaxed">Handles <strong class="text-white">unlimited concurrent calls</strong> without extra headcount.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="ph ph-database text-brand-cyan text-2xl mt-1"></i> 
-                        <p class="text-slate-300 leading-relaxed"><strong class="text-white">Automatically captures</strong> lead details and sends them to your systems.</p>
-                    </li>
+                    <li class="flex items-start gap-4"><i class="ph ph-lightning text-brand-cyan text-2xl mt-1"></i> <p class="text-slate-300 leading-relaxed">AI answers every call <strong class="text-white">instantly</strong>, within a second of the first ring.</p></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-infinity text-brand-cyan text-2xl mt-1"></i> <p class="text-slate-300 leading-relaxed"><strong class="text-white">Never sleeps</strong>, never gets overwhelmed, never asks for leave.</p></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-headset text-brand-cyan text-2xl mt-1"></i> <p class="text-slate-300 leading-relaxed">Handles <strong class="text-white">unlimited concurrent calls</strong> without extra headcount.</p></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-database text-brand-cyan text-2xl mt-1"></i> <p class="text-slate-300 leading-relaxed"><strong class="text-white">Automatically captures</strong> lead details and sends them to your systems.</p></li>
                 </ul>
                 <div class="mt-8 p-4 bg-brand-cyan/10 border border-brand-cyan/20 rounded-xl relative z-10">
-                    <p class="text-brand-cyan font-semibold text-sm flex gap-2">
-                        <i class="ph-fill ph-trend-up text-lg"></i> 
-                        Result: fewer missed calls, faster response, more revenue — with lower operating cost.
-                    </p>
+                    <p class="text-brand-cyan font-semibold text-sm flex gap-2"><i class="ph-fill ph-trend-up text-lg"></i> Result: fewer missed calls, faster response, more revenue — with lower operating cost.</p>
                 </div>
             </div>
         </div>
@@ -239,7 +229,7 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: HOW AI TASKORBIT WORKS (Image 1 - The Glow Network) -->
+    <!-- HOW AI TASKORBIT WORKS IN YOUR BUSINESS (Infographic) -->
     <section class="py-32 px-6 relative z-10 w-full overflow-hidden gs-reveal bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] bg-cover">
         <div class="max-w-7xl mx-auto text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">How AI TaskOrbit works in your business</h2>
@@ -248,27 +238,22 @@
 
         <div class="relative w-full h-[850px] md:h-[600px] flex items-center justify-center max-w-6xl mx-auto perspective-container">
             
-            <!-- SVG Glowing Lines Background -->
             <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none">
                 <defs>
                     <linearGradient id="glowGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8" />
-                        <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8" />
+                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8" /><stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8" />
                     </linearGradient>
                     <linearGradient id="glowGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#ec4899" stop-opacity="0.8" />
-                        <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8" />
+                        <stop offset="0%" stop-color="#ec4899" stop-opacity="0.8" /><stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8" />
                     </linearGradient>
                     <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
                         <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
                         <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
                 </defs>
-                <!-- Abstract curves connecting sides to center -->
                 <path d="M 15% 25% C 30% 25%, 35% 50%, 50% 50%" stroke="url(#glowGrad1)" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
                 <path d="M 15% 50% C 30% 50%, 40% 50%, 50% 50%" stroke="#ec4899" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
                 <path d="M 15% 75% C 30% 75%, 35% 50%, 50% 50%" stroke="#06b6d4" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
-                
                 <path d="M 85% 25% C 70% 25%, 65% 50%, 50% 50%" stroke="url(#glowGrad2)" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
                 <path d="M 85% 50% C 70% 50%, 60% 50%, 50% 50%" stroke="#06b6d4" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
                 <path d="M 85% 75% C 70% 75%, 65% 50%, 50% 50%" stroke="#a855f7" stroke-width="3" fill="none" filter="url(#neonGlow)" class="path-line"/>
@@ -276,277 +261,204 @@
 
             <!-- Center Console (Lead Form + Robot) -->
             <div class="relative z-20 w-[340px] glass rounded-3xl p-6 border-b-4 border-brand-cyan/50 shadow-[0_0_50px_rgba(0,240,255,0.2)] bg-black/60 transform hover:scale-105 transition-transform duration-500">
-                <!-- Mini Robot sitting on top -->
-                <img src="gemini.png" onerror="this.src='https://cdn3d.iconscout.com/3d/premium/thumb/robot-4996112-4159599.png'" class="absolute -top-24 left-1/2 transform -translate-x-1/2 w-40 drop-shadow-[0_0_20px_rgba(0,240,255,0.8)]" alt="AI Agent">
+                <!-- PROVIDED LOGO IN CENTER -->
+                <img src="https://i.ibb.co/8nD2ZTZm/Gemini-Generated-Image-4d2na04d2na04d2n-removebg-preview.png" class="absolute -top-32 left-1/2 transform -translate-x-1/2 w-48 drop-shadow-[0_0_20px_rgba(0,240,255,0.8)]" alt="AI Agent">
                 
-                <h3 class="text-white font-bold text-center mt-12 mb-4 border-b border-white/10 pb-2">Lead Enquiry Form</h3>
-                <div class="space-y-3">
-                    <div class="bg-white/5 border border-white/10 rounded px-3 py-2 flex items-center text-xs text-slate-400"><i class="ph ph-user mr-2 text-brand-cyan"></i> Name</div>
-                    <div class="bg-white/5 border border-white/10 rounded px-3 py-2 flex items-center text-xs text-slate-400"><i class="ph ph-envelope mr-2 text-brand-cyan"></i> Email</div>
-                    <div class="bg-white/5 border border-white/10 rounded px-3 py-2 flex items-center text-xs text-slate-400"><i class="ph ph-phone mr-2 text-brand-cyan"></i> Phone Number</div>
-                    <div class="bg-white/5 border border-white/10 rounded px-3 py-6 text-xs text-slate-400">Your Message...</div>
-                    <button class="w-full bg-blue-500 text-white font-bold py-2 rounded shadow-[0_0_15px_rgba(59,130,246,0.6)]">Submit</button>
-                </div>
+                <h3 class="text-white font-bold text-center mt-12 mb-4 border-b border-white/10 pb-2">Connect via WhatsApp</h3>
+                <form class="space-y-3" onsubmit="sendToWhatsApp(event, 'mini')">
+                    <input type="text" id="mini-name" required placeholder="Name" class="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-xs text-white outline-none focus:border-brand-cyan">
+                    <input type="text" id="mini-company" required placeholder="Company Name" class="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-xs text-white outline-none focus:border-brand-cyan">
+                    <textarea id="mini-msg" rows="3" required placeholder="How can AI help you?" class="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-xs text-white outline-none focus:border-brand-cyan"></textarea>
+                    <button type="submit" class="w-full bg-[#25D366] text-white font-bold py-2 rounded shadow-[0_0_15px_rgba(37,211,102,0.6)] flex items-center justify-center gap-2">
+                        <i class="ph-fill ph-whatsapp-logo text-lg"></i> Send Message
+                    </button>
+                </form>
             </div>
 
             <!-- Outer Cards -->
-            <!-- Left 1 -->
             <div class="absolute top-[5%] md:top-[15%] left-4 md:left-[5%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-orange z-20 transform hover:scale-110 transition-transform cursor-pointer">
                 <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-buildings text-3xl text-orange-400"></i><h4 class="font-bold text-white text-sm md:text-base">Real Estate</h4></div>
                 <p class="text-[10px] md:text-xs text-slate-300">Capture and qualify property inquiries before competitors call back.</p>
             </div>
-            <!-- Left 2 -->
             <div class="absolute top-[35%] md:top-[42%] left-4 md:left-[0%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-pink z-20 transform hover:scale-110 transition-transform cursor-pointer">
                 <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-stethoscope text-3xl text-pink-500"></i><h4 class="font-bold text-white text-sm md:text-base">Clinics</h4></div>
                 <p class="text-[10px] md:text-xs text-slate-300">Handle appointment booking without front desk overload.</p>
             </div>
-            <!-- Left 3 -->
             <div class="absolute top-[65%] md:top-[70%] left-4 md:left-[5%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-cyan z-20 transform hover:scale-110 transition-transform cursor-pointer">
                 <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-bank text-3xl text-cyan-400"></i><h4 class="font-bold text-white text-sm md:text-base">Finance</h4></div>
                 <p class="text-[10px] md:text-xs text-slate-300">Qualify loan and investment leads with compliant scripts.</p>
             </div>
-
-            <!-- Right 1 -->
             <div class="absolute top-[15%] right-4 md:right-[5%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-pink z-20 transform hover:scale-110 transition-transform cursor-pointer hidden md:block">
-                <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-stethoscope text-3xl text-pink-500"></i><h4 class="font-bold text-white text-sm md:text-base">Clinics</h4></div>
-                <p class="text-[10px] md:text-xs text-slate-300">Handle appointment booking without front desk overload.</p>
+                <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-stethoscope text-3xl text-pink-500"></i><h4 class="font-bold text-white text-sm md:text-base">Agencies</h4></div>
+                <p class="text-[10px] md:text-xs text-slate-300">Automate client onboarding and initial support questions.</p>
             </div>
-            <!-- Right 2 -->
             <div class="absolute top-[42%] right-4 md:right-[0%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-cyan z-20 transform hover:scale-110 transition-transform cursor-pointer">
                 <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-shopping-cart text-3xl text-cyan-400"></i><h4 class="font-bold text-white text-sm md:text-base">E-commerce</h4></div>
                 <p class="text-[10px] md:text-xs text-slate-300">Answer delivery, order, and product questions automatically.</p>
             </div>
-            <!-- Right 3 -->
             <div class="absolute top-[70%] right-4 md:right-[5%] w-48 md:w-64 bg-black/80 rounded-2xl p-4 glow-card-purple z-20 transform hover:scale-110 transition-transform cursor-pointer">
                 <div class="flex items-center gap-3 mb-2"><i class="ph-fill ph-student text-3xl text-purple-400"></i><h4 class="font-bold text-white text-sm md:text-base">Coaching</h4></div>
                 <p class="text-[10px] md:text-xs text-slate-300">Manage admission, fee, and batch inquiries at scale.</p>
             </div>
-
         </div>
     </section>
 
-    <!-- METRICS SECTION -->
-    <section class="py-24 px-6 relative z-10 max-w-7xl mx-auto gs-reveal">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Comparative Industry Performance Metrics</h2>
-            <p class="text-slate-400">Data-driven insights into AI automation efficiency gains.</p>
-        </div>
-        <div class="grid md:grid-cols-5 gap-4">
-            <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
-                <i class="ph ph-buildings text-3xl text-brand-cyan mb-4"></i>
-                <h3 class="font-bold text-white mb-2">Real Estate</h3>
-                <p class="text-xs text-slate-400 mb-4">Bottleneck: Speed-to-lead</p>
-                <div class="text-2xl font-black text-brand-cyan">35% Gain</div>
-            </div>
-            <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
-                <i class="ph ph-stethoscope text-3xl text-brand-cyan mb-4"></i>
-                <h3 class="font-bold text-white mb-2">Healthcare</h3>
-                <p class="text-xs text-slate-400 mb-4">Bottleneck: Intake friction</p>
-                <div class="text-2xl font-black text-brand-cyan">20% Boost</div>
-            </div>
-            <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
-                <i class="ph ph-shopping-cart text-3xl text-brand-cyan mb-4"></i>
-                <h3 class="font-bold text-white mb-2">E-commerce</h3>
-                <p class="text-xs text-slate-400 mb-4">Bottleneck: Repetitive tickets</p>
-                <div class="text-2xl font-black text-brand-cyan">40% Drop</div>
-            </div>
-            <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
-                <i class="ph ph-bank text-3xl text-brand-cyan mb-4"></i>
-                <h3 class="font-bold text-white mb-2">Finance</h3>
-                <p class="text-xs text-slate-400 mb-4">Bottleneck: Fraud detection</p>
-                <div class="text-2xl font-black text-brand-cyan">99.8%</div>
-            </div>
-            <div class="glass p-6 rounded-2xl hover:-translate-y-2 transition-transform">
-                <i class="ph ph-student text-3xl text-brand-cyan mb-4"></i>
-                <h3 class="font-bold text-white mb-2">Coaching</h3>
-                <p class="text-xs text-slate-400 mb-4">Bottleneck: Scalable enquiries</p>
-                <div class="text-2xl font-black text-brand-cyan">5x Growth</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NIST CYBERSECURITY FRAMEWORK -->
+    <!-- THEME MATCHED NIST CYBERSECURITY FRAMEWORK -->
     <section class="py-24 px-6 max-w-7xl mx-auto gs-reveal">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">NIST Framework Integration</h2>
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">How AI TaskOrbit Works: Integrating the NIST Framework</h2>
             <p class="text-slate-400 max-w-2xl mx-auto">Process logic modeled after the NIST Cybersecurity Framework ensuring robust, secure operations.</p>
         </div>
 
-        <div class="flex flex-col md:flex-row w-full overflow-hidden rounded-xl shadow-2xl">
-            <!-- Steps 1 to 5 -->
-            <div class="nist-step flex-1 bg-[#F5B041] p-8 pl-12 text-center text-white relative flex flex-col items-center">
-                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">01</div>
-                <h3 class="font-bold text-lg mb-2">Identify</h3>
-                <p class="text-xs opacity-90 leading-tight mb-4">Asset & Lead Management</p>
-                <i class="ph ph-eye text-2xl mt-auto pt-4"></i>
+        <div class="nist-container w-full overflow-hidden">
+            <!-- Step 1 -->
+            <div class="nist-step nist-1 flex-1 text-center text-white relative flex flex-col items-center">
+                <div class="w-12 h-12 rounded-full border border-orange-400 flex items-center justify-center text-xl font-bold mb-4 text-orange-400 bg-orange-400/10">01</div>
+                <h3 class="font-bold text-xl mb-1 text-orange-400">Identify</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4 text-orange-200">Asset & Lead Management</p>
+                <p class="text-[11px] leading-relaxed text-slate-300">Cataloging client assets, data systems, and identifying critical lead entry points.</p>
+                <i class="ph ph-eye text-3xl mt-6 text-orange-400"></i>
             </div>
-            <div class="nist-step flex-1 bg-[#CD5C5C] p-8 pl-12 text-center text-white relative flex flex-col items-center">
-                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">02</div>
-                <h3 class="font-bold text-lg mb-2">Protect</h3>
-                <p class="text-xs opacity-90 leading-tight mb-4">Data Security</p>
-                <i class="ph ph-shield-check text-2xl mt-auto pt-4"></i>
+            
+            <!-- Step 2 -->
+            <div class="nist-step nist-2 flex-1 text-center text-white relative flex flex-col items-center">
+                <div class="w-12 h-12 rounded-full border border-red-400 flex items-center justify-center text-xl font-bold mb-4 text-red-400 bg-red-400/10">02</div>
+                <h3 class="font-bold text-xl mb-1 text-red-400">Protect</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4 text-red-200">Data Security</p>
+                <p class="text-[11px] leading-relaxed text-slate-300">Implementing encryption, access controls, and role-based training to protect lead data.</p>
+                <i class="ph ph-shield-check text-3xl mt-6 text-red-400"></i>
             </div>
-            <div class="nist-step flex-1 bg-[#45B39D] p-8 pl-12 text-center text-white relative flex flex-col items-center">
-                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">03</div>
-                <h3 class="font-bold text-lg mb-2">Detect</h3>
-                <p class="text-xs opacity-90 leading-tight mb-4">Intent Recognition</p>
-                <i class="ph ph-crosshair text-2xl mt-auto pt-4"></i>
+
+            <!-- Step 3 -->
+            <div class="nist-step nist-3 flex-1 text-center text-white relative flex flex-col items-center">
+                <div class="w-12 h-12 rounded-full border border-teal-400 flex items-center justify-center text-xl font-bold mb-4 text-teal-400 bg-teal-400/10">03</div>
+                <h3 class="font-bold text-xl mb-1 text-teal-400">Detect</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4 text-teal-200">Intent Recognition</p>
+                <p class="text-[11px] leading-relaxed text-slate-300">Real-time monitoring of conversations to detect shifts in intent or security anomalies.</p>
+                <i class="ph ph-crosshair text-3xl mt-6 text-teal-400"></i>
             </div>
-            <div class="nist-step flex-1 bg-[#2E86C1] p-8 pl-12 text-center text-white relative flex flex-col items-center">
-                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">04</div>
-                <h3 class="font-bold text-lg mb-2">Respond</h3>
-                <p class="text-xs opacity-90 leading-tight mb-4">Incident & Action</p>
-                <i class="ph ph-arrow-fat-lines-right text-2xl mt-auto pt-4"></i>
+
+            <!-- Step 4 -->
+            <div class="nist-step nist-4 flex-1 text-center text-white relative flex flex-col items-center">
+                <div class="w-12 h-12 rounded-full border border-blue-400 flex items-center justify-center text-xl font-bold mb-4 text-blue-400 bg-blue-400/10">04</div>
+                <h3 class="font-bold text-xl mb-1 text-blue-400">Respond</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4 text-blue-200">Incident & Action</p>
+                <p class="text-[11px] leading-relaxed text-slate-300">Instantaneous AI response to customer queries to minimize lead drop-off and contain errors.</p>
+                <i class="ph ph-arrow-fat-lines-right text-3xl mt-6 text-blue-400"></i>
             </div>
-            <div class="nist-step flex-1 bg-[#1A5276] p-8 pl-12 text-center text-white relative flex flex-col items-center">
-                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4">05</div>
-                <h3 class="font-bold text-lg mb-2">Recover</h3>
-                <p class="text-xs opacity-90 leading-tight mb-4">Resilience</p>
-                <i class="ph ph-gear text-2xl mt-auto pt-4"></i>
+
+            <!-- Step 5 -->
+            <div class="nist-step nist-5 flex-1 text-center text-white relative flex flex-col items-center">
+                <div class="w-12 h-12 rounded-full border border-purple-400 flex items-center justify-center text-xl font-bold mb-4 text-purple-400 bg-purple-400/10">05</div>
+                <h3 class="font-bold text-xl mb-1 text-purple-400">Recover</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4 text-purple-200">Resilience & Restoration</p>
+                <p class="text-[11px] leading-relaxed text-slate-300">Restoring normal operations after disruptions and refining models through post-mortem analysis.</p>
+                <i class="ph ph-gear text-3xl mt-6 text-purple-400"></i>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION: TESTIMONIALS -->
-    <section class="py-24 relative z-10 w-full overflow-hidden gs-reveal bg-black/40 border-y border-white/5">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Loved by <span class="text-gradient">Industry Leaders</span></h2>
-            <p class="text-slate-400">See what happens when you deploy a 24/7 AI workforce.</p>
-        </div>
-
-        <div class="marquee-track gap-8 px-4">
-            <!-- Testimonial 1 -->
-            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-brand-cyan transition-colors">
-                <div class="flex text-brand-cyan mb-4">
-                    <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                </div>
-                <p class="text-slate-300 italic mb-6">"AI TaskOrbit completely transformed our real estate lead qualification. We don't miss a single late-night property inquiry anymore. Revenue is up 35%!"</p>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">SJ</div>
-                    <div>
-                        <h4 class="text-white font-bold">Sarah Jenkins</h4>
-                        <p class="text-xs text-slate-500">Director, Apex Real Estate</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Testimonial 2 -->
-            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-brand-purple transition-colors">
-                <div class="flex text-purple-400 mb-4">
-                    <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                </div>
-                <p class="text-slate-300 italic mb-6">"The front desk overload at our clinic was causing staff burnout. The AI voice agent now handles 80% of our appointment bookings flawlessly."</p>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-purple-900 rounded-full flex items-center justify-center text-white font-bold">Dr.M</div>
-                    <div>
-                        <h4 class="text-white font-bold">Dr. Marcus Lin</h4>
-                        <p class="text-xs text-slate-500">Head Physician, CityCare</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Testimonial 3 -->
-            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-pink-500 transition-colors">
-                <div class="flex text-pink-500 mb-4">
-                    <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                </div>
-                <p class="text-slate-300 italic mb-6">"Our e-commerce store gets thousands of 'Where is my order?' queries. The AI handles them autonomously. Operating costs dropped by 40% instantly."</p>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-pink-900 rounded-full flex items-center justify-center text-white font-bold">AK</div>
-                    <div>
-                        <h4 class="text-white font-bold">Alicia Keys</h4>
-                        <p class="text-xs text-slate-500">Founder, TrendCart</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Duplicate for infinite scroll effect -->
-            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-brand-cyan transition-colors">
-                <div class="flex text-brand-cyan mb-4">
-                    <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                </div>
-                <p class="text-slate-300 italic mb-6">"AI TaskOrbit completely transformed our real estate lead qualification. We don't miss a single late-night property inquiry anymore. Revenue is up 35%!"</p>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">SJ</div>
-                    <div>
-                        <h4 class="text-white font-bold">Sarah Jenkins</h4>
-                        <p class="text-xs text-slate-500">Director, Apex Real Estate</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- HIGH-CONVERTING LEAD ENQUIRY FORM -->
+    <!-- HIGH-CONVERTING WHATSAPP ENQUIRY FORM -->
     <section id="demo" class="py-24 px-6 relative z-10 gs-reveal">
         <div class="max-w-4xl mx-auto glass rounded-3xl p-8 md:p-14 relative overflow-hidden">
             <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-cyan/20 blur-[80px] rounded-full pointer-events-none"></div>
             
             <div class="text-center mb-10 relative z-10">
                 <h2 class="text-3xl md:text-5xl font-black text-white mb-4">Request Your Custom <span class="text-gradient">AI Strategy</span></h2>
-                <p class="text-slate-400">Fill out the form below. Our routing engine will instantly connect you with a vertical-specific solution architect.</p>
+                <p class="text-slate-400">Fill out the form below. Your request will be instantly sent to our WhatsApp for immediate response.</p>
             </div>
 
-            <form class="space-y-6 relative z-10" onsubmit="event.preventDefault(); alert('Request sent securely. AI routing in progress.');">
+            <form class="space-y-6 relative z-10" onsubmit="sendToWhatsApp(event, 'main')">
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
-                        <input type="text" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="John Doe">
+                        <input type="text" id="wa-name" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="John Doe">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Work Email</label>
-                        <input type="email" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="john@company.com">
+                        <input type="email" id="wa-email" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="john@company.com">
                     </div>
                 </div>
                 
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Company Name</label>
-                        <input type="text" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="Acme Corp">
+                        <input type="text" id="wa-company" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="Acme Corp">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Industry Vertical</label>
-                        <select required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors appearance-none">
+                        <select id="wa-industry" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors appearance-none cursor-pointer">
                             <option value="" disabled selected>Select Industry</option>
-                            <option value="realestate">Real Estate</option>
-                            <option value="healthcare">Healthcare & Clinics</option>
-                            <option value="ecommerce">E-commerce</option>
-                            <option value="finance">Finance</option>
-                            <option value="coaching">Coaching & Education</option>
+                            <option value="Real Estate">Real Estate</option>
+                            <option value="Healthcare & Clinics">Healthcare & Clinics</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Coaching & Education">Coaching & Education</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Primary Operational Bottleneck</label>
-                    <textarea rows="3" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="E.g., We are struggling with front desk overload and missed calls..."></textarea>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Your Requirements / Message</label>
+                    <textarea id="wa-msg" rows="3" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-cyan transition-colors" placeholder="E.g., We need an AI Voice Agent to handle missed calls..."></textarea>
                 </div>
 
-                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-purple text-white font-bold text-lg hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(123,44,191,0.5)]">
-                    Generate My AI Architecture
+                <button type="submit" class="w-full py-4 rounded-xl bg-[#25D366] text-white font-bold text-lg hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(37,211,102,0.5)] flex justify-center items-center gap-2">
+                    <i class="ph-fill ph-whatsapp-logo text-2xl"></i> Chat on WhatsApp
                 </button>
             </form>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 pt-10 pb-6 text-center text-slate-500 text-sm relative z-10">
-        <p>&copy; 2026 AI TaskOrbit. Built purely with HTML, CSS, & JavaScript. GSAP Enabled.</p>
+    <footer class="border-t border-white/10 pt-12 pb-8 bg-brand-navy relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+                <a href="#" class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                    <i class="ph ph-robot text-brand-cyan text-3xl"></i>
+                    <span class="text-xl font-bold tracking-widest text-white uppercase">AI TaskOrbit</span>
+                </a>
+                <p class="text-slate-400 text-sm">Your 24/7 autonomous employee. Stop losing leads while you sleep.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Contact Us</h4>
+                <ul class="space-y-2 text-sm text-slate-400">
+                    <li><a href="mailto:taskorbitt@gmail.com" class="hover:text-brand-cyan flex items-center justify-center md:justify-start gap-2"><i class="ph ph-envelope"></i> taskorbitt@gmail.com</a></li>
+                    <li><a href="https://wa.me/919654524339" target="_blank" class="hover:text-brand-cyan flex items-center justify-center md:justify-start gap-2"><i class="ph ph-whatsapp-logo"></i> +91 96545 24339</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Legal</h4>
+                <ul class="space-y-2 text-sm text-slate-400">
+                    <li><a href="#" class="hover:text-brand-cyan">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-brand-cyan">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-slate-600 text-xs mt-12 border-t border-white/5 pt-6">
+            &copy; 2026 AI TaskOrbit. All Rights Reserved.
+        </div>
     </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919654524339" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.6)] hover:scale-110 transition-transform z-50 flex items-center justify-center group">
+        <i class="ph-fill ph-whatsapp-logo text-3xl"></i>
+        <span class="absolute right-16 bg-white text-black text-xs font-bold px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg pointer-events-none">Chat with us!</span>
+    </a>
 
     <!-- GSAP & Vanilla JS Interactions -->
     <script>
-        // GSAP ScrollTrigger Integration
         gsap.registerPlugin(ScrollTrigger);
 
         // 1. Meetsansara Style Hero Logo Animation (3D Hover + Float)
         const heroLogo = document.getElementById('gemini-logo');
-        
-        // Continuous smooth float
         gsap.to(heroLogo, { y: -20, duration: 2.5, yoyo: true, repeat: -1, ease: "sine.inOut" });
 
-        // Cursor interactive 3D rotation
         document.addEventListener('mousemove', (e) => {
             if(!heroLogo) return;
-            const x = (window.innerWidth / 2 - e.pageX) / 40;
-            const y = (window.innerHeight / 2 - e.pageY) / 40;
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
             gsap.to(heroLogo, { rotationY: -x, rotationX: y, duration: 0.8, ease: "power2.out", transformPerspective: 1000 });
         });
 
@@ -555,10 +467,7 @@
         revealElements.forEach((elem) => {
             gsap.fromTo(elem, 
                 { autoAlpha: 0, y: 50 }, 
-                { 
-                    duration: 1, autoAlpha: 1, y: 0, ease: "power3.out",
-                    scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
-                }
+                { duration: 1, autoAlpha: 1, y: 0, ease: "power3.out", scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" } }
             );
         });
 
@@ -567,6 +476,33 @@
         floatCards.forEach(card => {
             gsap.to(card, { y: -15, duration: 3, yoyo: true, repeat: -1, ease: "sine.inOut", delay: Math.random() });
         });
+
+        // 4. WhatsApp Form Submission Logic
+        function sendToWhatsApp(event, formType) {
+            event.preventDefault();
+            
+            let name, email, company, industry, message, text;
+            const targetPhone = "919654524339";
+
+            if(formType === 'main') {
+                name = document.getElementById('wa-name').value;
+                email = document.getElementById('wa-email').value;
+                company = document.getElementById('wa-company').value;
+                industry = document.getElementById('wa-industry').value;
+                message = document.getElementById('wa-msg').value;
+                
+                text = `Hello AI TaskOrbit! 👋%0A%0A*New Website Enquiry*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Company:* ${company}%0A*Industry:* ${industry}%0A*Message:* ${message}`;
+            } else if (formType === 'mini') {
+                name = document.getElementById('mini-name').value;
+                company = document.getElementById('mini-company').value;
+                message = document.getElementById('mini-msg').value;
+                
+                text = `Hello AI TaskOrbit! 👋%0A%0A*Quick Enquiry*%0A%0A*Name:* ${name}%0A*Company:* ${company}%0A*Message:* ${message}`;
+            }
+
+            const waLink = `https://wa.me/${targetPhone}?text=${text}`;
+            window.open(waLink, '_blank');
+        }
     </script>
 </body>
 </html>
