@@ -27,42 +27,66 @@
         .glass-card{background:rgba(15,23,42,.6);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:1.5rem}
         .text-gradient{background:linear-gradient(135deg,#00f0ff,#7b2cbf);-webkit-background-clip:text;color:transparent}
         
-        /* 3D Space Setup */
-        .perspective-container{perspective:1000px;transform-style:preserve-3d}
-        .orbiting-robot{position:absolute;top:30%;left:50%;width:120px;margin-left:-60px;margin-top:-60px;animation:orbit3D 12s linear infinite;transform-style:preserve-3d;z-index:50;pointer-events:none}
-        @keyframes orbit3D{0%{transform:rotateY(0deg) translateZ(250px) rotateY(0deg)}100%{transform:rotateY(360deg) translateZ(250px) rotateY(-360deg)}}
+        /* 3D Orbiting Robot (Circular Animation) */
+        .orbit-container{perspective:1200px;transform-style:preserve-3d; position: relative;}
+        .orbiting-robot{
+            position:absolute; top:50%; left:50%;
+            width:160px; margin-top:-80px; margin-left:-80px;
+            animation:orbit3D 10s linear infinite;
+            z-index:50; pointer-events:none;
+        }
+        @keyframes orbit3D{
+            0% { transform: rotateY(0deg) translateZ(280px) rotateY(0deg) translateY(0px); }
+            25% { transform: rotateY(90deg) translateZ(280px) rotateY(-90deg) translateY(-20px); }
+            50% { transform: rotateY(180deg) translateZ(280px) rotateY(-180deg) translateY(0px); }
+            75% { transform: rotateY(270deg) translateZ(280px) rotateY(-270deg) translateY(20px); }
+            100% { transform: rotateY(360deg) translateZ(280px) rotateY(-360deg) translateY(0px); }
+        }
         
-        /* Dashboard & Graphs */
-        .graph-bar{animation:growBar 2s ease-out forwards; transform-origin: bottom;}
-        @keyframes growBar{0%{transform:scaleY(0)}100%{transform:scaleY(1)}}
-
-        /* Split Screen Shadows */
+        /* Glowing Cards */
+        .glow-card-orange{box-shadow:0 0 20px rgba(245,158,11,.4),inset 0 0 10px rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.5)}
+        .glow-card-pink{box-shadow:0 0 20px rgba(236,72,153,.4),inset 0 0 10px rgba(236,72,153,.2);border:1px solid rgba(236,72,153,.5)}
+        .glow-card-cyan{box-shadow:0 0 20px rgba(6,182,212,.4),inset 0 0 10px rgba(6,182,212,.2);border:1px solid rgba(6,182,212,.5)}
+        .glow-card-purple{box-shadow:0 0 20px rgba(168,85,247,.4),inset 0 0 10px rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.5)}
+        
+        /* Lines & Diagrams */
+        .path-line{stroke-dasharray:1000;stroke-dashoffset:1000;animation:dash 5s linear infinite}
+        @keyframes dash{to{stroke-dashoffset:0}}
         .split-red{box-shadow:inset 0 0 100px rgba(239,68,68,0.05); border:1px solid rgba(239,68,68,0.2)}
         .split-green{box-shadow:inset 0 0 100px rgba(34,197,94,0.05); border:1px solid rgba(34,197,94,0.2)}
 
-        /* Sliders */
+        /* Exact NIST Chevron Infographic CSS */
+        .nist-wrapper { display: flex; flex-direction: column; width: 100%; overflow: hidden; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        @media (min-width: 1024px) { .nist-wrapper { flex-direction: row; overflow: visible; } }
+        .nist-block {
+            flex: 1; padding: 40px 20px 40px 45px; text-align: center; color: white; position: relative;
+            clip-path: polygon(0% 0%, calc(100% - 30px) 0%, 100% 50%, calc(100% - 30px) 100%, 0% 100%, 30px 50%);
+            margin-left: -30px; transition: transform 0.3s ease, filter 0.3s ease; cursor: pointer;
+        }
+        @media (max-width: 1023px) {
+            .nist-block { clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 20px), 50% 100%, 0% calc(100% - 20px)); margin-left: 0; margin-top: -20px; padding: 40px 20px 50px 20px; }
+            .nist-block:first-child { margin-top: 0; }
+        }
+        .nist-block:first-child { clip-path: polygon(0% 0%, calc(100% - 30px) 0%, 100% 50%, calc(100% - 30px) 100%, 0% 100%, 0% 50%); margin-left: 0; padding-left: 20px; }
+        .nist-block:hover { transform: translateY(-10px); z-index: 10; filter: brightness(1.2); }
+
+        /* Sliders & FAQ */
+        .faq-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out}
+        .faq-item.active .faq-content{max-height:500px}
+        .faq-item.active .faq-icon{transform:rotate(45deg);color:#3b82f6}
         input[type=range]{-webkit-appearance:none;width:100%;background:0 0}
         input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:20px;width:20px;border-radius:50%;background:#3b82f6;cursor:pointer;margin-top:-8px;box-shadow:0 0 10px #3b82f6}
         input[type=range]::-webkit-slider-runnable-track{width:100%;height:4px;cursor:pointer;background:rgba(255,255,255,.2);border-radius:2px}
         
-        /* Marquee */
+        /* Auto-Scrolling Marquee */
         .marquee-track{display:flex;width:max-content;animation:scrollMarquee 40s linear infinite}
         @keyframes scrollMarquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .marquee-track:hover{animation-play-state:paused}
+        
         .client-logo{filter:grayscale(100%) opacity(50%); transition:all 0.3s ease;}
         .client-logo:hover{filter:grayscale(0%) opacity(100%);}
-
-        /* Ambient Glow */
         .glow-blob{position:fixed;border-radius:50%;filter:blur(120px);z-index:-1;opacity:.15;animation:pulseGlow 10s infinite alternate;pointer-events:none}
-        @keyframes pulseGlow{0%{transform:scale(1);opacity:.10}100%{transform:scale(1.2);opacity:.25}}
-
-        /* Custom Audio Waveform Animation */
-        .wave-bar { width: 4px; height: 8px; background: #00f0ff; border-radius: 2px; transition: height 0.2s ease; display: inline-block; margin: 0 1px; }
-        .playing .wave-bar { animation: soundWave 0.8s ease-in-out infinite alternate; }
-        .playing .wave-bar:nth-child(2) { animation-delay: 0.1s; }
-        .playing .wave-bar:nth-child(3) { animation-delay: 0.2s; }
-        .playing .wave-bar:nth-child(4) { animation-delay: 0.3s; }
-        .playing .wave-bar:nth-child(5) { animation-delay: 0.4s; }
-        @keyframes soundWave { 0% { height: 8px; } 100% { height: 24px; } }
+        @keyframes pulseGlow{0%{transform:scale(1);opacity:.15}100%{transform:scale(1.2);opacity:.3}}
     </style>
 </head>
 <body class="antialiased relative">
@@ -70,91 +94,61 @@
     <div class="glow-blob bg-brand-purple w-[40vw] h-[40vw] top-[-10%] left-[-10%]"></div>
     <div class="glow-blob bg-brand-cyan w-[40vw] h-[40vw] bottom-[10%] right-[-10%]" style="animation-delay:-5s;"></div>
 
-    <!-- NAVBAR -->
+    <!-- 1. NAVBAR -->
     <nav class="fixed w-full top-0 z-50 bg-[#050b14]/90 backdrop-blur-md border-b border-white/5 py-4 px-6 transition-all">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <a href="#" class="flex items-center gap-3">
                 <img src="https://i.ibb.co/8nD2ZTZm/Gemini-Generated-Image-4d2na04d2na04d2n-removebg-preview.png" class="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]" alt="Logo">
-                <span class="text-xl font-bold text-white">AI TaskOrbit</span>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-xl font-bold text-white">AI TaskOrbit</span>
+                </div>
             </a>
             <div class="hidden lg:flex gap-6 items-center text-sm font-medium text-slate-300">
+                <a href="#roi" class="hover:text-white transition">Calculator</a>
+                <a href="#capabilities" class="hover:text-white transition">Platform</a>
                 <a href="#how" class="hover:text-white transition">How it Works</a>
-                <a href="#demos" class="hover:text-white transition">Voice Demos</a>
-                <a href="#pricing" class="hover:text-white transition">Pricing</a>
-                <a href="#about" class="hover:text-white transition">About Us</a>
+                <a href="#testimonials" class="hover:text-white transition">Customers</a>
             </div>
             <div class="hidden md:flex gap-4 items-center">
-                <a href="#contact" class="text-sm font-bold bg-brand-blue text-white px-5 py-2 rounded-full hover:bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)] transition">Get free demo</a>
+                <a href="#demo" class="text-sm font-medium text-white border border-white/20 px-4 py-2 rounded-full hover:bg-white/10 transition">Talk to AI Now</a>
+                <a href="#demo" class="text-sm font-bold bg-brand-blue text-white px-5 py-2 rounded-full hover:bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)] transition">Get free demo</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- 2. HERO + 3D ORBITING ROBOT -->
     <section class="min-h-screen flex items-center justify-center pt-24 perspective-container px-6 overflow-hidden bg-gradient-to-br from-[#0a2e2b]/40 via-[#050b14] to-[#120a2e]/40">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
             <div class="z-10 gs-reveal">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 font-medium text-sm mb-6">
                     <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Stop Revenue Leaks Today
                 </div>
-                <h1 class="text-5xl lg:text-7xl font-black text-white leading-tight mb-6">Turn Every Missed Call Into <span class="text-gradient">Revenue</span> — Automatically</h1>
-                <p class="text-xl text-slate-400 mb-8 max-w-lg leading-relaxed">AI TaskOrbit answers, qualifies, and converts your customer calls 24/7 — so you never lose a paying customer again.</p>
-                <div class="flex gap-4">
-                    <a href="#contact" class="px-8 py-4 rounded-full bg-brand-blue text-white font-bold hover:bg-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.4)]">Get Free Demo</a>
-                </div>
-            </div>
-            <!-- Dashboard Mockup + Robot Graphic -->
-            <div class="relative h-[600px] w-full flex items-center justify-center transform-3d gs-reveal">
-                <div class="absolute w-[300px] h-[300px] bg-brand-cyan/20 rounded-full blur-[100px] animate-pulse"></div>
-                <img id="main-hero-logo" src="https://i.ibb.co/8nD2ZTZm/Gemini-Generated-Image-4d2na04d2na04d2n-removebg-preview.png" alt="AI Robot" class="relative z-20 w-80 lg:w-[350px] drop-shadow-[0_0_40px_rgba(0,240,255,0.6)] cursor-pointer" />
-                <div class="absolute top-10 w-full h-[80%] border border-white/10 rounded-3xl bg-black/40 backdrop-blur-md -z-10 shadow-2xl flex flex-col justify-end p-6">
-                    <div class="flex items-end gap-2 h-32 opacity-70 border-b border-white/10 pb-2">
-                        <div class="w-1/6 bg-white/10 rounded-t-sm h-1/4 graph-bar"></div>
-                        <div class="w-1/6 bg-white/20 rounded-t-sm h-2/4 graph-bar" style="animation-delay: 0.2s"></div>
-                        <div class="w-1/6 bg-white/30 rounded-t-sm h-3/4 graph-bar" style="animation-delay: 0.4s"></div>
-                        <div class="w-1/6 bg-brand-cyan/50 rounded-t-sm h-[90%] graph-bar" style="animation-delay: 0.6s"></div>
-                        <div class="w-1/6 bg-brand-cyan rounded-t-sm h-full graph-bar shadow-[0_0_15px_#00f0ff]" style="animation-delay: 0.8s"></div>
-                    </div>
-                </div>
-                <div class="float-card absolute top-16 -right-4 glass px-6 py-4 rounded-2xl shadow-lg border border-green-500/30 z-30 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400"><i class="ph-fill ph-check-circle text-2xl"></i></div>
-                    <div><p class="text-[10px] text-slate-400 uppercase">Call Answered</p><h4 class="text-white font-bold text-sm">Happy Customer</h4></div>
-                </div>
-                <div class="float-card absolute bottom-16 -left-4 glass px-6 py-4 rounded-2xl shadow-lg border border-brand-blue/30 z-30 flex items-center gap-3" style="animation-delay:1.5s">
-                    <div class="w-10 h-10 rounded-full bg-brand-blue/20 flex items-center justify-center text-brand-blue"><i class="ph-fill ph-currency-inr text-2xl"></i></div>
-                    <div><p class="text-[10px] text-slate-400 uppercase">Lead Converted</p><h4 class="text-white font-bold text-sm">+₹45,000 Revenue</h4></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- LIVE ROI DIAGRAM & CALCULATOR -->
-    <section id="roi" class="py-24 px-6 relative overflow-hidden bg-black border-y border-white/5">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
-            <div class="gs-reveal">
-                <h2 class="text-4xl lg:text-5xl font-bold text-white leading-[1.1] mb-6">Every Missed Call Is <span class="text-red-500">Hidden Revenue Loss</span></h2>
-                <p class="text-xl text-slate-300 mb-8 max-w-lg leading-relaxed">
-                    You don’t see it — but it’s costing you daily.<br><br>
-                    <span class="text-brand-cyan font-bold">AI TaskOrbit</span> captures every missed opportunity and turns it into booked revenue — automatically.
+                <h1 class="text-5xl lg:text-7xl font-black text-white leading-tight mb-6">
+                    Turn Every Missed Call Into <span class="text-gradient">Revenue</span> — Automatically
+                </h1>
+                <p class="text-xl text-slate-400 mb-8 max-w-lg leading-relaxed">
+                    AI TaskOrbit answers, qualifies, and converts your customer calls 24/7 — so you never lose a paying customer to your competitors again.
                 </p>
-                <div class="flex items-center gap-2 md:gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 mb-8">
-                    <div class="text-center"><div class="w-12 h-12 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center mb-2 mx-auto"><i class="ph-fill ph-phone-slash text-xl"></i></div><p class="text-[10px] font-bold text-slate-400 uppercase">Missed Call</p></div>
-                    <i class="ph-bold ph-arrow-right text-slate-600 text-xl animate-pulse"></i>
-                    <div class="text-center"><div class="w-12 h-12 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center mb-2 mx-auto"><i class="ph-fill ph-robot text-xl"></i></div><p class="text-[10px] font-bold text-slate-400 uppercase">AI Responds</p></div>
-                    <i class="ph-bold ph-arrow-right text-slate-600 text-xl animate-pulse"></i>
-                    <div class="text-center"><div class="w-12 h-12 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mb-2 mx-auto"><i class="ph-fill ph-currency-inr text-xl"></i></div><p class="text-[10px] font-bold text-slate-400 uppercase">Booked Revenue</p></div>
+                <div class="flex gap-4">
+                    <a href="#demo" class="px-8 py-4 rounded-full bg-brand-blue text-white font-bold hover:bg-blue-500 transition-colors shadow-[0_0_30px_rgba(59,130,246,0.4)]">Get Free Demo</a>
+                    <a href="#demo" class="px-8 py-4 rounded-full border border-white/20 text-white font-bold hover:bg-white/10 transition-colors hidden sm:block">Talk to AI Now</a>
                 </div>
             </div>
-            
-            <div class="relative gs-reveal">
-                <div class="glass-card p-8 relative z-20 shadow-2xl">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <p class="text-xs font-bold tracking-widest text-slate-400 uppercase mb-2">Live Impact Estimate</p>
-                            <h2 class="text-5xl font-bold text-white mb-2" id="calc-revenue">₹1,50,000</h2>
-                            <p class="text-sm text-slate-400 max-w-xs">Revenue you could recover this month.</p>
-                        </div>
+
+            <!-- Orbit Container with Calculator -->
+            <div class="relative orbit-container gs-reveal w-full max-w-md mx-auto lg:mx-0">
+                
+                <!-- THE 3D ORBITING ROBOT -->
+                <img src="https://i.ibb.co/8nD2ZTZm/Gemini-Generated-Image-4d2na04d2na04d2n-removebg-preview.png" class="orbiting-robot drop-shadow-[0_0_40px_rgba(0,240,255,0.8)]" alt="3D Orbiting AI">
+
+                <!-- Interactive Calculator Card (Center) -->
+                <div class="glass-card p-8 relative z-20 shadow-[0_0_50px_rgba(0,240,255,0.15)] bg-black/60">
+                    <div class="mb-6">
+                        <p class="text-xs font-bold tracking-widest text-slate-400 uppercase mb-2">Live Impact Estimate</p>
+                        <h2 class="text-4xl lg:text-5xl font-bold text-white mb-2" id="calc-revenue">₹1,50,000</h2>
+                        <p class="text-sm text-slate-400">Revenue you could recover this month.</p>
                     </div>
-                    <div class="bg-black/40 border border-white/10 rounded-2xl p-6 mt-6">
+                    <div class="bg-black/50 border border-white/10 rounded-2xl p-6">
                         <div class="mb-6">
                             <div class="flex justify-between text-sm text-white mb-2 font-medium"><span>Missed calls / day</span><span id="val-calls" class="font-bold text-brand-blue">5</span></div>
                             <input type="range" id="slider-calls" min="1" max="50" value="5" oninput="updateCalculator()">
@@ -171,164 +165,243 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: LIVE VOICE RECORDINGS (Customer Appointments) -->
-    <section id="demos" class="py-24 px-6 relative z-10 max-w-5xl mx-auto">
-        <div class="text-center mb-16 gs-reveal">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Listen to <span class="text-gradient">AI TaskOrbit</span> In Action</h2>
-            <p class="text-slate-400 text-lg">Real conversations where our AI successfully books appointments and answers complex queries.</p>
-        </div>
-
-        <div class="space-y-6">
-            <!-- Audio Card 1 -->
-            <div class="gs-audio-track glass p-6 rounded-3xl flex items-center justify-between border-l-4 border-brand-cyan hover:bg-white/5 transition-colors">
-                <div class="flex items-center gap-6">
-                    <button onclick="toggleAudio('audio1', this)" class="w-14 h-14 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center hover:bg-brand-cyan hover:text-black transition-colors shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                        <i class="ph-fill ph-play text-2xl play-icon"></i>
-                    </button>
-                    <div>
-                        <h3 class="text-white font-bold text-lg">Real Estate: Booking a Site Visit</h3>
-                        <p class="text-xs text-slate-400">Customer calling at 11:30 PM for a property inquiry.</p>
-                    </div>
-                </div>
-                <div class="hidden sm:flex items-center gap-1 opacity-50 wave-container">
-                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-                </div>
-                <!-- Using a generic public sample audio for demo purposes. Replace src with your real recordings -->
-                <audio id="audio1" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    <!-- 3. SPLIT SCREEN: PROBLEM VS SOLUTION -->
+    <section class="py-24 px-6 relative z-10 max-w-7xl mx-auto gs-reveal">
+        <div class="grid md:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+            <div class="p-10 md:p-14 bg-[#1a0505] split-red relative group">
+                <h3 class="text-3xl font-bold text-white mb-8 flex items-center gap-3"><i class="ph-fill ph-x-circle text-red-500 text-4xl"></i> Without AI</h3>
+                <ul class="space-y-8">
+                    <li class="flex items-start gap-4"><i class="ph ph-phone-disconnect text-red-500 text-2xl mt-1"></i> <div><strong class="text-red-400 text-lg block mb-1">Calls missed = money gone forever</strong><p class="text-slate-400 text-sm">Every unanswered ring is a customer buying from someone else.</p></div></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-clock text-red-500 text-2xl mt-1"></i> <div><strong class="text-red-400 text-lg block mb-1">Staff unavailable after hours</strong><p class="text-slate-400 text-sm">Your business dies at 6 PM. Buyers search at 10 PM.</p></div></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-users-three text-red-500 text-2xl mt-1"></i> <div><strong class="text-red-400 text-lg block mb-1">Leads go to competitors</strong><p class="text-slate-400 text-sm">Modern buyers don't wait. Slow response kills intent instantly.</p></div></li>
+                </ul>
             </div>
-
-            <!-- Audio Card 2 -->
-            <div class="gs-audio-track glass p-6 rounded-3xl flex items-center justify-between border-l-4 border-pink-500 hover:bg-white/5 transition-colors">
-                <div class="flex items-center gap-6">
-                    <button onclick="toggleAudio('audio2', this)" class="w-14 h-14 rounded-full bg-pink-500/20 text-pink-500 flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors shadow-[0_0_15px_rgba(236,72,153,0.3)]">
-                        <i class="ph-fill ph-play text-2xl play-icon"></i>
-                    </button>
-                    <div>
-                        <h3 class="text-white font-bold text-lg">Clinic: Rescheduling Appointment</h3>
-                        <p class="text-xs text-slate-400">Patient changes their dentist appointment dates seamlessly.</p>
-                    </div>
-                </div>
-                <div class="hidden sm:flex items-center gap-1 opacity-50 wave-container">
-                    <div class="wave-bar" style="background:#ec4899"></div><div class="wave-bar" style="background:#ec4899"></div><div class="wave-bar" style="background:#ec4899"></div><div class="wave-bar" style="background:#ec4899"></div><div class="wave-bar" style="background:#ec4899"></div>
-                </div>
-                <audio id="audio2" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
-            </div>
-
-            <!-- Audio Card 3 -->
-            <div class="gs-audio-track glass p-6 rounded-3xl flex items-center justify-between border-l-4 border-green-500 hover:bg-white/5 transition-colors">
-                <div class="flex items-center gap-6">
-                    <button onclick="toggleAudio('audio3', this)" class="w-14 h-14 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center hover:bg-green-500 hover:text-white transition-colors shadow-[0_0_15px_rgba(34,197,94,0.3)]">
-                        <i class="ph-fill ph-play text-2xl play-icon"></i>
-                    </button>
-                    <div>
-                        <h3 class="text-white font-bold text-lg">Salon: Weekend Haircut Booking</h3>
-                        <p class="text-xs text-slate-400">AI checks calendar and blocks a slot for Saturday 2 PM.</p>
-                    </div>
-                </div>
-                <div class="hidden sm:flex items-center gap-1 opacity-50 wave-container">
-                    <div class="wave-bar" style="background:#22c55e"></div><div class="wave-bar" style="background:#22c55e"></div><div class="wave-bar" style="background:#22c55e"></div><div class="wave-bar" style="background:#22c55e"></div><div class="wave-bar" style="background:#22c55e"></div>
-                </div>
-                <audio id="audio3" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></audio>
-            </div>
-
-            <!-- Audio Card 4 -->
-            <div class="gs-audio-track glass p-6 rounded-3xl flex items-center justify-between border-l-4 border-purple-500 hover:bg-white/5 transition-colors">
-                <div class="flex items-center gap-6">
-                    <button onclick="toggleAudio('audio4', this)" class="w-14 h-14 rounded-full bg-purple-500/20 text-purple-500 flex items-center justify-center hover:bg-purple-500 hover:text-white transition-colors shadow-[0_0_15px_rgba(168,85,247,0.3)]">
-                        <i class="ph-fill ph-play text-2xl play-icon"></i>
-                    </button>
-                    <div>
-                        <h3 class="text-white font-bold text-lg">Finance: Loan Qualification</h3>
-                        <p class="text-xs text-slate-400">AI asks mandatory compliance questions before routing to agent.</p>
-                    </div>
-                </div>
-                <div class="hidden sm:flex items-center gap-1 opacity-50 wave-container">
-                    <div class="wave-bar" style="background:#a855f7"></div><div class="wave-bar" style="background:#a855f7"></div><div class="wave-bar" style="background:#a855f7"></div><div class="wave-bar" style="background:#a855f7"></div><div class="wave-bar" style="background:#a855f7"></div>
-                </div>
-                <audio id="audio4" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"></audio>
+            <div class="p-10 md:p-14 bg-[#051a10] split-green relative group">
+                <h3 class="text-3xl font-bold text-white mb-8 flex items-center gap-3"><i class="ph-fill ph-check-circle text-green-500 text-4xl"></i> With AI TaskOrbit</h3>
+                <ul class="space-y-8">
+                    <li class="flex items-start gap-4"><i class="ph ph-lightning text-green-500 text-2xl mt-1"></i> <div><strong class="text-green-400 text-lg block mb-1">Every call answered instantly</strong><p class="text-slate-300 text-sm">0 wait time. Your business is always on, always ready.</p></div></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-chats text-green-500 text-2xl mt-1"></i> <div><strong class="text-green-400 text-lg block mb-1">Human-like conversation</strong><p class="text-slate-300 text-sm">Empathetic, smart, and capable of handling complex questions.</p></div></li>
+                    <li class="flex items-start gap-4"><i class="ph ph-target text-green-500 text-2xl mt-1"></i> <div><strong class="text-green-400 text-lg block mb-1">Leads captured + qualified automatically</strong><p class="text-slate-300 text-sm">Appointments booked directly into your CRM without human effort.</p></div></li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION: PRICING -->
-    <section id="pricing" class="py-24 px-6 relative z-10 max-w-7xl mx-auto gs-reveal">
+    <!-- 4. LIVE ROI DIAGRAM -->
+    <section id="roi" class="py-24 px-6 relative overflow-hidden bg-black border-y border-white/5">
+        <div class="max-w-7xl mx-auto text-center relative z-10 gs-reveal">
+            <h2 class="text-4xl lg:text-5xl font-bold text-white leading-[1.1] mb-6">Every Missed Call Is <span class="text-red-500">Hidden Revenue Loss</span></h2>
+            <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+                You don’t see it — but it’s costing you daily.<br>
+                <span class="text-brand-cyan font-bold">AI TaskOrbit</span> captures every missed opportunity and turns it into booked revenue — automatically.
+            </p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 bg-white/5 p-6 rounded-3xl border border-white/10 max-w-4xl mx-auto">
+                <div class="text-center w-full md:w-1/3"><div class="w-16 h-16 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center mb-3 mx-auto"><i class="ph-fill ph-phone-slash text-2xl"></i></div><h4 class="font-bold text-white mb-1">Missed Call</h4><p class="text-xs text-slate-400">Customer hangs up.</p></div>
+                <i class="ph-bold ph-arrow-right text-slate-500 text-3xl animate-pulse rotate-90 md:rotate-0"></i>
+                <div class="text-center w-full md:w-1/3"><div class="w-16 h-16 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center mb-3 mx-auto"><i class="ph-fill ph-robot text-2xl"></i></div><h4 class="font-bold text-white mb-1">AI Responds Instantly</h4><p class="text-xs text-slate-400">Answers & qualifies lead.</p></div>
+                <i class="ph-bold ph-arrow-right text-slate-500 text-3xl animate-pulse rotate-90 md:rotate-0"></i>
+                <div class="text-center w-full md:w-1/3"><div class="w-16 h-16 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mb-3 mx-auto"><i class="ph-fill ph-currency-inr text-2xl"></i></div><h4 class="font-bold text-white mb-1">Booked Revenue</h4><p class="text-xs text-slate-400">Pushed straight to CRM.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. NEW SECTION: PLATFORM CAPABILITIES BUILT FOR REVENUE TEAMS -->
+    <section id="capabilities" class="py-24 px-6 relative z-10 max-w-7xl mx-auto gs-reveal">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Simple, Transparent <span class="text-gradient">Pricing</span></h2>
-            <p class="text-slate-400">Scale your business with AI. No hidden fees.</p>
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Platform capabilities built for <span class="text-gradient">revenue teams</span></h2>
+            <p class="text-slate-400 max-w-2xl mx-auto text-lg">More than a bot — AI TaskOrbit is your always-on, always-learning frontline for inbound calls.</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8 items-center">
-            <!-- Starter -->
+        <div class="grid md:grid-cols-3 gap-6">
             <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform">
-                <h3 class="text-2xl font-bold text-white mt-4">Starter</h3>
-                <p class="text-slate-400 text-sm mt-2">Perfect for small businesses.</p>
-                <div class="text-4xl font-black text-white my-6">₹4,999 <span class="text-lg text-slate-500 font-normal">/mo</span></div>
-                <a href="#contact" class="block text-center w-full py-3 rounded-xl font-bold mb-8 transition bg-white/10 text-white hover:bg-white/20">Start Free Trial</a>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-brand-cyan"></i> Up to 1,000 calls/mo</div>
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-brand-cyan"></i> Basic CRM Sync</div>
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-brand-cyan"></i> Standard Voice Models</div>
-                </div>
+                <i class="ph-fill ph-robot text-brand-cyan text-4xl mb-4"></i>
+                <h3 class="font-bold text-white text-xl mb-3">AI call automation</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Answer, route, and resolve inbound calls automatically with smart workflows tuned to your business.</p>
             </div>
-
-            <!-- Growth (Highlighted) -->
-            <div class="glass p-8 rounded-3xl border-2 border-brand-blue shadow-[0_0_30px_rgba(59,130,246,0.2)] transform md:scale-105 relative z-10">
-                <div class="absolute top-0 left-0 w-full bg-brand-blue text-white text-center text-sm font-bold py-1 rounded-t-2xl">Most Popular</div>
-                <h3 class="text-2xl font-bold text-white mt-8">Growth</h3>
-                <p class="text-slate-400 text-sm mt-2">For scaling teams.</p>
-                <div class="text-4xl font-black text-white my-6">₹9,999 <span class="text-lg text-slate-500 font-normal">/mo</span></div>
-                <a href="#contact" class="block text-center w-full py-3 rounded-xl font-bold mb-8 transition bg-brand-blue text-white hover:bg-blue-500">Deploy AI Now</a>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-brand-blue"></i> Up to 5,000 calls/mo</div>
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-brand-blue"></i> Advanced CRM Sync & Booking</div>
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-brand-blue"></i> Multi-language Support</div>
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-brand-blue"></i> WhatsApp Follow-ups</div>
-                </div>
-            </div>
-
-            <!-- Enterprise -->
             <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform">
-                <h3 class="text-2xl font-bold text-white mt-4">Enterprise</h3>
-                <p class="text-slate-400 text-sm mt-2">For large volumes.</p>
-                <div class="text-4xl font-black text-white my-6">Custom</div>
-                <a href="#contact" class="block text-center w-full py-3 rounded-xl font-bold mb-8 transition bg-white/10 text-white hover:bg-white/20">Contact Sales</a>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-purple-400"></i> Unlimited Calls</div>
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-purple-400"></i> Custom AI Voice Clone</div>
-                    <div class="flex items-center gap-3 text-slate-300"><i class="ph-fill ph-check-circle text-purple-400"></i> Dedicated Account Manager</div>
-                </div>
+                <i class="ph-fill ph-chats text-brand-blue text-4xl mb-4"></i>
+                <h3 class="font-bold text-white text-xl mb-3">Human-like conversations</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Natural, context-aware voice that understands intent, asks follow‑ups, and keeps callers engaged.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform">
+                <i class="ph-fill ph-magnet text-purple-400 text-4xl mb-4"></i>
+                <h3 class="font-bold text-white text-xl mb-3">Lead capture system</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Capture name, contact, intent, and next steps on every call — no more lost sticky notes.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform">
+                <i class="ph-fill ph-whatsapp-logo text-green-500 text-4xl mb-4"></i>
+                <h3 class="font-bold text-white text-xl mb-3">CRM & WhatsApp integration</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Push qualified leads into your CRM and sales WhatsApp instantly so your team can act fast.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform">
+                <i class="ph-fill ph-translate text-orange-400 text-4xl mb-4"></i>
+                <h3 class="font-bold text-white text-xl mb-3">Multi-language support</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Serve customers in multiple languages and accents to match your markets and regions effortlessly.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform">
+                <i class="ph-fill ph-git-merge text-pink-400 text-4xl mb-4"></i>
+                <h3 class="font-bold text-white text-xl mb-3">Smart call routing</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Route VIPs and hot leads to the right people while AI handles FAQs and low-value calls autonomously.</p>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION: ABOUT US (MISSION & VISION) -->
-    <section id="about" class="py-24 px-6 border-y border-white/10 bg-[#0a0a0f] relative z-10 gs-reveal">
+    <!-- 6. EXACT NIST CYBERSECURITY FRAMEWORK (Screenshot Matched Infographic) -->
+    <section class="py-24 px-6 max-w-7xl mx-auto gs-reveal relative z-10">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">How AI TaskOrbit Works: Integrating the NIST Framework</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto">Process logic modeled after the NIST Cybersecurity Framework ensuring robust, secure operations.</p>
+        </div>
+
+        <div class="nist-wrapper">
+            <div class="nist-block bg-[#E69F3D]">
+                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4 mx-auto">01</div>
+                <h3 class="font-bold text-xl mb-2">Identify</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4">Asset & Lead Management</p>
+                <p class="text-xs leading-relaxed opacity-80">Cataloging client assets, data systems, and identifying critical lead entry points.</p>
+                <i class="ph ph-eye text-3xl mt-6"></i>
+            </div>
+            <div class="nist-block bg-[#C95A57]">
+                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4 mx-auto">02</div>
+                <h3 class="font-bold text-xl mb-2">Protect</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4">Data Security</p>
+                <p class="text-xs leading-relaxed opacity-80">Implementing encryption, access controls, and role-based training to protect lead data.</p>
+                <i class="ph ph-shield-check text-3xl mt-6"></i>
+            </div>
+            <div class="nist-block bg-[#48B39B]">
+                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4 mx-auto">03</div>
+                <h3 class="font-bold text-xl mb-2">Detect</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4">Intent Recognition</p>
+                <p class="text-xs leading-relaxed opacity-80">Real-time monitoring of conversations to detect shifts in intent or security anomalies.</p>
+                <i class="ph ph-crosshair text-3xl mt-6"></i>
+            </div>
+            <div class="nist-block bg-[#348BC5]">
+                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4 mx-auto">04</div>
+                <h3 class="font-bold text-xl mb-2">Respond</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4">Incident & Action</p>
+                <p class="text-xs leading-relaxed opacity-80">Instantaneous AI response to customer queries to minimize lead drop-off and contain errors.</p>
+                <i class="ph ph-arrow-fat-lines-right text-3xl mt-6"></i>
+            </div>
+            <div class="nist-block bg-[#1E5676]">
+                <div class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center text-xl font-bold mb-4 mx-auto">05</div>
+                <h3 class="font-bold text-xl mb-2">Recover</h3>
+                <p class="text-xs font-semibold opacity-90 mb-4">Resilience & Restoration</p>
+                <p class="text-xs leading-relaxed opacity-80">Restoring normal operations after disruptions and refining models through post-mortem analysis.</p>
+                <i class="ph ph-gear text-3xl mt-6"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. PUNCHY INDUSTRY USE CASES -->
+    <section id="industries" class="py-24 px-6 bg-white/5 relative z-10 gs-reveal">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">About <span class="text-gradient">TaskOrbit</span></h2>
-                <p class="text-slate-400 max-w-3xl mx-auto text-lg leading-relaxed">
-                    We are a team of AI engineers and growth strategists dedicated to solving the biggest bottleneck in business today: missed communication. Our AI voice agents don't just answer phones; they build relationships, qualify intent, and drive bottom-line revenue.
-                </p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Mission -->
-                <div class="glass p-10 rounded-3xl flex flex-col items-center text-center hover:border-brand-cyan transition-colors">
-                    <div class="w-16 h-16 bg-brand-cyan/20 text-brand-cyan rounded-full flex items-center justify-center mb-6"><i class="ph-fill ph-rocket-launch text-3xl"></i></div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Our Mission</h3>
-                    <p class="text-slate-400 leading-relaxed">To democratize enterprise-grade AI automation for every growing business in India, ensuring no customer inquiry ever goes unanswered.</p>
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-16 text-center">Built For Your <span class="text-gradient">Industry</span></h2>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-16">
+                <div class="glow-card-orange bg-black/60 p-8 rounded-3xl hover:-translate-y-2 transition-transform">
+                    <div class="text-4xl mb-4">🏠</div><h3 class="text-xl font-bold text-white mb-2">Real Estate</h3>
+                    <p class="text-slate-400 text-sm">Capture hot leads before competitors even respond.</p>
                 </div>
-                <!-- Vision -->
-                <div class="glass p-10 rounded-3xl flex flex-col items-center text-center hover:border-purple-400 transition-colors">
-                    <div class="w-16 h-16 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center mb-6"><i class="ph-fill ph-eye text-3xl"></i></div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Our Vision</h3>
-                    <p class="text-slate-400 leading-relaxed">A future with zero missed opportunities. We envision a world where businesses operate seamlessly 24/7, providing instant, empathetic, and intelligent customer experiences.</p>
+                <div class="glow-card-pink bg-black/60 p-8 rounded-3xl hover:-translate-y-2 transition-transform">
+                    <div class="text-4xl mb-4">🏥</div><h3 class="text-xl font-bold text-white mb-2">Clinics</h3>
+                    <p class="text-slate-400 text-sm">Auto-book appointments without receptionist overload.</p>
+                </div>
+                <div class="glow-card-cyan bg-black/60 p-8 rounded-3xl hover:-translate-y-2 transition-transform">
+                    <div class="text-4xl mb-4">💰</div><h3 class="text-xl font-bold text-white mb-2">Finance</h3>
+                    <p class="text-slate-400 text-sm">Qualify serious clients with smart compliant scripts.</p>
+                </div>
+                <div class="glow-card-purple bg-black/60 p-8 rounded-3xl hover:-translate-y-2 transition-transform md:col-span-1 md:col-start-1">
+                    <div class="text-4xl mb-4">🛒</div><h3 class="text-xl font-bold text-white mb-2">E-commerce</h3>
+                    <p class="text-slate-400 text-sm">Handle order & delivery queries instantly.</p>
+                </div>
+                <div class="glow-card-cyan bg-black/60 p-8 rounded-3xl hover:-translate-y-2 transition-transform md:col-span-2">
+                    <div class="text-4xl mb-4">🎓</div><h3 class="text-xl font-bold text-white mb-2">Coaching</h3>
+                    <p class="text-slate-400 text-sm">Automate admission inquiries at scale seamlessly.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AGGRESSIVE CTA & WHATSAPP FORM -->
-    <section id="contact" class="py-24 px-6 relative z-10 gs-reveal">
+    <!-- 8. AUTO-SCROLLING TESTIMONIALS (Loved By Industry Leaders) -->
+    <section id="testimonials" class="py-24 bg-black border-y border-white/5 relative z-10 overflow-hidden">
+        <div class="text-center mb-16 gs-reveal">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Loved by <span class="text-gradient">Industry Leaders</span></h2>
+            <p class="text-slate-400">See what happens when you deploy a 24/7 AI workforce.</p>
+        </div>
+
+        <div class="marquee-track gap-8 px-4 pb-8">
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-brand-blue transition-colors">
+                <div class="flex text-brand-blue mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p class="text-slate-300 italic mb-6">"AI TaskOrbit completely transformed our real estate lead qualification. Revenue is up 35% this month!"</p>
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">SJ</div><div><h4 class="text-white font-bold">Sarah Jenkins</h4><p class="text-xs text-slate-500">Director, Apex Real Estate</p></div></div>
+            </div>
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-pink-500 transition-colors">
+                <div class="flex text-pink-500 mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p class="text-slate-300 italic mb-6">"The front desk overload at our clinic was causing staff burnout. The AI handles 80% of our bookings flawlessly."</p>
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-pink-900 rounded-full flex items-center justify-center text-white font-bold">Dr.M</div><div><h4 class="text-white font-bold">Dr. Marcus Lin</h4><p class="text-xs text-slate-500">Head Physician, CityCare</p></div></div>
+            </div>
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-purple-400 transition-colors">
+                <div class="flex text-purple-400 mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p class="text-slate-300 italic mb-6">"Our e-commerce store gets thousands of 'Where is my order?' queries. Operating costs dropped by 40% instantly."</p>
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-purple-900 rounded-full flex items-center justify-center text-white font-bold">AK</div><div><h4 class="text-white font-bold">Alicia Keys</h4><p class="text-xs text-slate-500">Founder, TrendCart</p></div></div>
+            </div>
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-green-500 transition-colors">
+                <div class="flex text-green-500 mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p class="text-slate-300 italic mb-6">"Scaling our admission process was tough until TaskOrbit. It answers student queries 24/7 in 5 languages."</p>
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-green-900 rounded-full flex items-center justify-center text-white font-bold">RV</div><div><h4 class="text-white font-bold">Rahul Varma</h4><p class="text-xs text-slate-500">CEO, EduScale</p></div></div>
+            </div>
+            <!-- Duplicates for Infinite Scroll -->
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-brand-blue transition-colors">
+                <div class="flex text-brand-blue mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p class="text-slate-300 italic mb-6">"AI TaskOrbit completely transformed our real estate lead qualification. Revenue is up 35% this month!"</p>
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">SJ</div><div><h4 class="text-white font-bold">Sarah Jenkins</h4><p class="text-xs text-slate-500">Director, Apex Real Estate</p></div></div>
+            </div>
+            <div class="glass w-[400px] p-8 rounded-3xl flex-shrink-0 cursor-pointer hover:border-pink-500 transition-colors">
+                <div class="flex text-pink-500 mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <p class="text-slate-300 italic mb-6">"The front desk overload at our clinic was causing staff burnout. The AI handles 80% of our bookings flawlessly."</p>
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-pink-900 rounded-full flex items-center justify-center text-white font-bold">Dr.M</div><div><h4 class="text-white font-bold">Dr. Marcus Lin</h4><p class="text-xs text-slate-500">Head Physician, CityCare</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. TRUSTED BY 500+ LOGOS -->
+    <section class="py-12 border-b border-white/10 bg-[#050b14] overflow-hidden relative z-10">
+        <p class="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Trusted by 500+ Growing Businesses Across India</p>
+        <div class="marquee-track flex gap-20 items-center">
+            <h3 class="text-2xl font-bold text-white client-logo cursor-pointer"><i class="ph-fill ph-buildings mr-2 text-orange-500"></i>Apex Real Estate</h3>
+            <h3 class="text-2xl font-bold text-white client-logo cursor-pointer"><i class="ph-fill ph-stethoscope mr-2 text-pink-500"></i>CityCare Clinics</h3>
+            <h3 class="text-2xl font-bold text-white client-logo cursor-pointer"><i class="ph-fill ph-shopping-cart mr-2 text-cyan-500"></i>TrendCart E-com</h3>
+            <h3 class="text-2xl font-bold text-white client-logo cursor-pointer"><i class="ph-fill ph-bank mr-2 text-green-500"></i>Capital Wealth</h3>
+            <h3 class="text-2xl font-bold text-white client-logo cursor-pointer"><i class="ph-fill ph-student mr-2 text-purple-500"></i>EduScale Coaching</h3>
+            <h3 class="text-2xl font-bold text-white client-logo cursor-pointer"><i class="ph-fill ph-buildings mr-2 text-orange-500"></i>Apex Real Estate</h3>
+            <h3 class="text-2xl font-bold text-white client-logo cursor-pointer"><i class="ph-fill ph-stethoscope mr-2 text-pink-500"></i>CityCare Clinics</h3>
+        </div>
+    </section>
+
+    <!-- 10. FAQ ACCORDION -->
+    <section id="faq" class="py-24 px-6 max-w-4xl mx-auto gs-reveal relative z-10">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Frequently Asked <span class="text-gradient">Questions</span></h2>
+        </div>
+        <div class="space-y-4">
+            <div class="faq-item glass rounded-2xl p-6 cursor-pointer" onclick="this.classList.toggle('active')">
+                <div class="flex justify-between items-center"><h4 class="font-bold text-white text-lg">Will the AI sound like a robot?</h4><i class="ph ph-plus text-xl text-slate-400 faq-icon transition-transform"></i></div>
+                <div class="faq-content"><p class="text-slate-400 mt-4 text-sm leading-relaxed">No. We use next-generation voice synthesis models that include breathing pauses, empathetic tones, and natural conversational flow. 90% of customers don't even realize they are speaking to an AI.</p></div>
+            </div>
+            <div class="faq-item glass rounded-2xl p-6 cursor-pointer" onclick="this.classList.toggle('active')">
+                <div class="flex justify-between items-center"><h4 class="font-bold text-white text-lg">Can it handle multiple calls at the same time?</h4><i class="ph ph-plus text-xl text-slate-400 faq-icon transition-transform"></i></div>
+                <div class="faq-content"><p class="text-slate-400 mt-4 text-sm leading-relaxed">Yes! Whether you get 1 call or 10,000 calls at the exact same second, AI TaskOrbit handles all of them concurrently without putting anyone on hold.</p></div>
+            </div>
+            <div class="faq-item glass rounded-2xl p-6 cursor-pointer" onclick="this.classList.toggle('active')">
+                <div class="flex justify-between items-center"><h4 class="font-bold text-white text-lg">How does it book appointments?</h4><i class="ph ph-plus text-xl text-slate-400 faq-icon transition-transform"></i></div>
+                <div class="faq-content"><p class="text-slate-400 mt-4 text-sm leading-relaxed">The AI integrates directly with your calendar. It checks real-time availability and books the slot during the live call, instantly sending a confirmation WhatsApp to the customer.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. AGGRESSIVE CTA & WHATSAPP FORM -->
+    <section id="demo" class="py-24 px-6 relative z-10 gs-reveal">
         <div class="max-w-4xl mx-auto glass rounded-3xl p-8 md:p-14 relative overflow-hidden border-2 border-red-500/20">
             <div class="absolute -top-32 -right-32 w-64 h-64 bg-red-500/20 blur-[80px] rounded-full pointer-events-none"></div>
             <div class="text-center mb-10 relative z-10">
@@ -344,19 +417,20 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <input type="text" id="wa-company" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-blue" placeholder="Company Name">
                     <select id="wa-industry" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-blue appearance-none">
-                        <option value="" disabled selected>Select Industry</option><option value="Real Estate">Real Estate</option><option value="Clinic/Healthcare">Healthcare</option><option value="E-commerce">E-commerce</option><option value="Finance">Finance</option><option value="Other">Other</option>
+                        <option value="" disabled selected>Select Industry</option><option value="Real Estate">Real Estate</option><option value="Healthcare">Healthcare</option><option value="E-commerce">E-commerce</option><option value="Finance">Finance</option><option value="Other">Other</option>
                     </select>
                 </div>
                 <textarea id="wa-msg" rows="3" required class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-brand-blue" placeholder="How many calls are you missing a day?"></textarea>
                 <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <button type="submit" class="flex-1 py-4 rounded-xl bg-[#25D366] text-white font-bold text-lg hover:opacity-90 shadow-[0_0_20px_rgba(37,211,102,0.5)] flex justify-center items-center gap-2"><i class="ph-fill ph-whatsapp-logo text-2xl"></i> Request Strategy on WhatsApp</button>
+                    <button type="submit" class="flex-1 py-4 rounded-xl bg-brand-blue text-white font-bold text-lg hover:bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)]">Get Free Demo</button>
+                    <button type="submit" class="flex-1 py-4 rounded-xl bg-[#25D366] text-white font-bold text-lg hover:opacity-90 shadow-[0_0_20px_rgba(37,211,102,0.5)] flex justify-center items-center gap-2"><i class="ph-fill ph-whatsapp-logo text-2xl"></i> Talk to AI Now</button>
                 </div>
             </form>
         </div>
     </section>
 
-    <!-- CLEAN FOOTER -->
-    <footer class="border-t border-white/10 pt-12 pb-8 bg-[#02050A] relative z-10">
+    <!-- 12. CLEAN FOOTER -->
+    <footer id="contact" class="border-t border-white/10 pt-12 pb-8 bg-[#02050A] relative z-10">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center md:text-left">
             <div>
                 <a href="#" class="flex items-center justify-center md:justify-start gap-2 mb-4">
@@ -391,28 +465,9 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 3D Logo Logic
-        const mainHeroLogo = document.getElementById('main-hero-logo');
-        if (mainHeroLogo) {
-            gsap.to(mainHeroLogo, { y: -20, duration: 2.5, yoyo: true, repeat: -1, ease: "sine.inOut" });
-            document.addEventListener('mousemove', (e) => {
-                const x = (window.innerWidth / 2 - e.pageX) / 40;
-                const y = (window.innerHeight / 2 - e.pageY) / 40;
-                gsap.to(mainHeroLogo, { rotationY: -x, rotationX: y, duration: 0.8, ease: "power2.out", transformPerspective: 1000 });
-            });
-        }
-
-        // Reveal Animations
         const revealElements = document.querySelectorAll(".gs-reveal");
         revealElements.forEach((elem) => { gsap.fromTo(elem, { autoAlpha: 0, y: 50 }, { duration: 1, autoAlpha: 1, y: 0, ease: "power3.out", scrollTrigger: { trigger: elem, start: "top 85%" } }); });
 
-        // Staggered Audio Tracks Entry
-        gsap.fromTo(".gs-audio-track", 
-            { autoAlpha: 0, y: 30, x: -20 },
-            { duration: 0.8, autoAlpha: 1, y: 0, x: 0, stagger: 0.2, ease: "back.out(1.2)", scrollTrigger: { trigger: "#demos", start: "top 70%" } }
-        );
-
-        // ROI Calculator Logic
         function updateCalculator() {
             const calls = document.getElementById('slider-calls').value;
             const ticket = document.getElementById('slider-ticket').value;
@@ -424,49 +479,6 @@
             document.getElementById('calc-loss').innerText = formattedLoss;
         }
 
-        // Custom Audio Player Logic
-        function toggleAudio(audioId, btnElement) {
-            const audio = document.getElementById(audioId);
-            const icon = btnElement.querySelector('.play-icon');
-            const waveContainer = btnElement.parentElement.nextElementSibling; // the .wave-container
-            
-            // Pause all other audios first
-            document.querySelectorAll('audio').forEach(a => {
-                if(a.id !== audioId) {
-                    a.pause();
-                    const otherBtn = document.querySelector(`button[onclick="toggleAudio('${a.id}', this)"] i`);
-                    if(otherBtn) {
-                        otherBtn.classList.remove('ph-pause');
-                        otherBtn.classList.add('ph-play');
-                    }
-                    const otherWave = a.previousElementSibling;
-                    if(otherWave && otherWave.classList.contains('wave-container')) {
-                        otherWave.classList.remove('playing');
-                    }
-                }
-            });
-
-            if (audio.paused) {
-                audio.play();
-                icon.classList.remove('ph-play');
-                icon.classList.add('ph-pause');
-                if(waveContainer) waveContainer.classList.add('playing');
-            } else {
-                audio.pause();
-                icon.classList.remove('ph-pause');
-                icon.classList.add('ph-play');
-                if(waveContainer) waveContainer.classList.remove('playing');
-            }
-
-            // Auto reset icon when audio ends
-            audio.onended = function() {
-                icon.classList.remove('ph-pause');
-                icon.classList.add('ph-play');
-                if(waveContainer) waveContainer.classList.remove('playing');
-            };
-        }
-
-        // WhatsApp Form Submit Logic
         function sendToWhatsApp(event, formType) {
             event.preventDefault();
             const name = document.getElementById('wa-name').value;
